@@ -4,7 +4,7 @@ var app = express();
 var port = 3030;
 
 // = = = = = = Load Routes = = = = = = //
-require('./routes/');
+require('./routes/index')(app);
 // = = = = = = Load Handlers = = = = = = //
 
 app.listen(port, function(){
