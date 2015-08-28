@@ -10,9 +10,15 @@ var User = function(){
         res.status(200).send({login: login, weight: weight});
     };
 
-    this.getAll = function(req, res, next){
-        console.log(req.myVar);
-        res.status(200).send(req.ip);
+    this.getUser = function(req, res, next){
+        var login = req.params.login;
+        console.log('user request');
+        res.status(200).send({login: login});
+    };
+    this.getUserSettings = function(req,res,next){
+        var login =req.params.login;
+        console.log('user request settings');
+        res.status(200).send({login: login, settings: 'settings info'});
     }
 };
 

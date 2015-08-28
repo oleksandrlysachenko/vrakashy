@@ -4,7 +4,8 @@ module.exports = (function(){
     var userRouter = express.Router();
     var userHandler = new UserHandler;
 
-    userRouter.get('/',userHandler.getAll);
+    userRouter.get('/:login',userHandler.getUser);
+    userRouter.get('/:login/settings',userHandler.getUserSettings);
 
     return userRouter;
 })();
