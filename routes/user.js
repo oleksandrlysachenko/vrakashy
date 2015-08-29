@@ -9,8 +9,10 @@ module.exports = (function(){
     userRouter.get('/:login/settings',userHandler.edit);
     userRouter.put('/:login/settings',userHandler.update);
     userRouter.get('/:login/friends',userHandler.friends);
-    userRouter.put('/:login/friends:loginAdd/',userHandler.friendsAdd);
-    userRouter.delete('/:login/friends:loginDelete',userHandler.friendsDelete);
+    userRouter.put('/:login/friends?:id',userHandler.friendsAdd);
+    userRouter.delete('/:login/friends?:id',userHandler.friendsDelete);
+
+
 
     return userRouter;
 })();

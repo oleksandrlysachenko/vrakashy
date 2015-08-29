@@ -1,7 +1,4 @@
 var User = function(res,req,next){
-    this.create = function(req, res, next){
-        res.status(200).send(req.body);
-    };
     this.view = function(req, res, next){
         var login = req.params.login;
         res.status(200).send('request for user: ' + login);
@@ -24,14 +21,14 @@ var User = function(res,req,next){
     };
     this.friendsAdd = function(req,res,next){
         var login = req.params.login;
-        var loginAdd = req.params.loginAdd;
-        res.status(200).send('user ' + login + ' add ' + loginAdd +
+        var idAdd = req.query.id;
+        res.status(200).send('user ' + login + ' add ' + idAdd +
         ' to friends list');
     };
     this.friendsDelete = function(req,res,next){
         var login = req.params.login;
-        var loginDelete = req.params.loginDelete;
-        res.status(200).send('user ' + login + ' delete ' + loginDelete +
+        var idDelete = req.params.loginDelete;
+        res.status(200).send('user ' + login + ' delete ' + idDelete +
         ' from friends list');
     }
 };
