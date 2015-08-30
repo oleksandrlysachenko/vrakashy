@@ -7,5 +7,14 @@ module.exports = function(app){
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use('/users',userRouter);
     app.use('/posts',postRouter);
+    app.get('/login',function(req,res,next){
+        res.status(200).send('login page');
+    });
+    app.get('/register',function(req,res,next){
+       res.status(200).send('register page');
+    });
+    app.post('/register', function(req,res,next){
+        res.status(200).send('register new user');
+    });
 };
 

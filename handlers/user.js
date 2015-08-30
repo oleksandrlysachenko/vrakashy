@@ -1,4 +1,20 @@
 var User = function(res,req,next){
+    this.auth = function(req,res,next){
+        if (true) {
+            next();
+        } else {
+            res.status(401).send('must be authorized');
+            next('must be authorized');
+        }
+    };
+    this.roleCheck = function(req,res,next){ // admins
+        if (true) {
+            next();
+        } else {
+            res.status(403).send('you don`t have permissions');
+            next('you don`t have permissions')
+        }
+    };
     this.view = function(req, res, next){
         var login = req.params.login;
         res.status(200).send('request for user: ' + login);
