@@ -5,16 +5,18 @@ module.exports = function(app){
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
-    app.use('/users',userRouter);
-    app.use('/posts',postRouter);
+    app.use('/user',userRouter);
+    app.use('/post',postRouter);
     app.get('/login',function(req,res,next){
         res.status(200).send('login page');
     });
     app.get('/register',function(req,res,next){
        res.status(200).send('register page');
     });
-    app.post('/register', function(req,res,next){
-        res.status(200).send('register new user');
+    app.use(function(err, req, res, next){
+        var status = err.status || 500;
+
+        res.status(status).send(err);
     });
 };
 

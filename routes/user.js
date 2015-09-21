@@ -4,13 +4,15 @@ module.exports = (function(){
     var userRouter = express.Router();
     var userHandler = new UserHandler;
 
-    userRouter.get('/:login',userHandler.view);
-    userRouter.delete('/:login',userHandler.auth,userHandler.roleCheck,userHandler.delete);
-    userRouter.get('/:login/settings',userHandler.auth,userHandler.edit);
-    userRouter.put('/:login/settings',userHandler.auth,userHandler.update);
-    userRouter.get('/:login/friends',userHandler.friends);
-    userRouter.put('/:login/friends?:id',userHandler.auth,userHandler.friendsAdd);
-    userRouter.delete('/:login/friends?:id',userHandler.auth,userHandler.friendsDelete);
+    userRouter.post('/',userHandler.create);
+    userRouter.get('/',userHandler.getAll);
+    userRouter.get('/:id',userHandler.view);
+    userRouter.delete('/:id',userHandler.auth,userHandler.roleCheck,userHandler.delete);
+    userRouter.get('/:id/settings',userHandler.auth,userHandler.edit);
+    userRouter.put('/:id/settings',userHandler.auth,userHandler.update);
+    userRouter.get('/:id/friends',userHandler.friends);
+    userRouter.put('/:id/friendsAdd?:idAdd',userHandler.auth,userHandler.friendsAdd);
+    userRouter.delete('/:id/friendsDelete?:idDelete',userHandler.auth,userHandler.friendsDelete);
 
     return userRouter;
 })();

@@ -1,3 +1,8 @@
+var mongoose = require('mongoose');
+var UserSchame = mongoose.schemas.User;
+var PostSchame = mongoose.schemas.Post;
+var _User = mongoose.model('user', UserSchame);
+var _Post = mongoose.model('post', PostSchame);
 var Posts = function(res,req,next) {
     this.auth = function(req,res,next){
         if (true) {
@@ -19,7 +24,12 @@ var Posts = function(res,req,next) {
         res.status(200).send('view all posts');
     };
     this.createPost = function(req,res,next) {
-        res.status(200).send('create post');
+        var body = req.body;
+        var post = new _Post(body);
+        post.save(function(err,post){
+            if (err){return next(err)}
+            res.status(200).send('create post! ' + post);
+        });
     };
     this.viewPost = function(req,res,next) {
         var postID = req.params.postId;
