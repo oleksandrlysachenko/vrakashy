@@ -21,23 +21,40 @@ var Posts = function(res,req,next) {
         }
     };
     this.viewAll = function(req,res,next) {
-        res.status(200).send('view all posts');
+        _Post.find({},function(err,response){
+            if (err) {return next(err)}
+            res.status(200).send(response);
+        });
     };
     this.createPost = function(req,res,next) {
         var body = req.body;
         var post = new _Post(body);
-        post.save(function(err,post){
-            if (err){return next(err)}
-            res.status(200).send('create post! ' + post);
+        post.save(function(err) {
+            if (err) {
+                return next(err)
+            }
+            //res.status(200).send('create post! ' + post);
+            _User.findByIdAndUpdate(body._author, {$push: {posts: post._id}}, function (err, response) {
+                if (err) {
+                    return next(err)
+                }
+                res.status(200).send('create post! ' + post);
+            })
         });
     };
     this.viewPost = function(req,res,next) {
         var postID = req.params.postId;
-        res.status(200).send('view current post: ' + postID);
+        _Post.findById(postID,function(err,response){
+            if (err) {return next(err)}
+            res.status(200).send('view current post: ' + response);
+        });
     };
     this.delete = function(req,res,next) {
         var postID = req.params.postId;
-        res.status(200).send('delete current post: ' + postID)
+        _Post.findByIdAndRemove(postID, function(err, response){
+            if (err){ return next(err); }
+            res.status(200).send('delete current post: ' + postID);
+        });
     }
 };
 module.exports = Posts;

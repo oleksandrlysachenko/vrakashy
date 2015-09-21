@@ -38,7 +38,7 @@ var User = function(res,req,next){
     };
     this.delete = function(req,res,next){
         var id = req.params.id;
-        _User.findByIdAndRemove(id, function(err, res){
+        _User.findByIdAndRemove(id, function(err, response){
             if (err){ return next(err); }
             res.status(200).send('delete user: ' + id);
         });
@@ -60,9 +60,12 @@ var User = function(res,req,next){
     };
     this.friends = function(req,res,next){
         var id = req.params.id;
-        _User.findById({_id: id},'friends', function(err,response){
+        _User
+            .findById({_id: id})
+            .populate('friends')
+            .exec(function(err,response){
             if (err){ return next(err);}
-            res.status(200).send('user ' + id + ' friends list: ' + response);
+            res.status(200).send('user ' + id + ' friends list: ' + response.friends);
         });
     };
     this.friendsAdd = function(req,res,next){
@@ -86,11 +89,22 @@ var User = function(res,req,next){
     this.getAll = function(req,res,next){
         _User
             .find()
-            .populate('_author')
+            .populate('posts')
+            .populate('friends')
             //.lean()
             .exec(function (err, response) {
                 if (err) { return next(err); }
                 res.status(200).send(response);
+            });
+    };
+    this.getPosts = function(req,res,next){
+        var id = req.params.id;
+        _User
+            .findById(id)
+            .populate('posts')
+            .exec(function(err, response){
+                if (err) {return next(err)}
+                res.status(200).send(response.posts)
             });
     }
 };

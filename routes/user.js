@@ -13,6 +13,7 @@ module.exports = (function(){
     userRouter.get('/:id/friends',userHandler.friends);
     userRouter.put('/:id/friendsAdd?:idAdd',userHandler.auth,userHandler.friendsAdd);
     userRouter.delete('/:id/friendsDelete?:idDelete',userHandler.auth,userHandler.friendsDelete);
+    userRouter.get('/:id/posts',userHandler.getPosts);
 
     return userRouter;
 })();
