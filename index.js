@@ -1,21 +1,29 @@
 var express = require('express');
 var app = express();
 var port = 3030;
-var mongoose = require('mongoose');
-var db = mongoose.connection;
 
-require('./models');
-// ------------- Load Routes ------------- //
-require('./routes/index')(app);
+var knex = require('knex')({
+       debug: true,
+       client: 'pg',
+       connection: {
+          host: 'localhost',
+          user: 'postgres',
+          password: '12345',
+          port: 5432,
+          database: 'test',
+          charset  : 'utf8'
+       }
+    }
+);
 
-mongoose.connect('localhost','VrakashyDB',27017);
+var PostGre = require('bookshelf')(knex);
+app.set('PostGre', PostGre);
 
-db.on('error', function(err) {
-   console.error(err);
-});
+var Model = require('./models/index');
+PostGre.Models = new Model(PostGre);
 
-db.once('open', function() {
-   app.listen(port, function () {
-      console.log('-> Server started on port: ' + port);
-   });
+require('./routes')(app);
+
+app.listen(port, function () {
+   console.log("-> Server started on port: " + port);
 });

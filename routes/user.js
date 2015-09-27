@@ -1,8 +1,8 @@
-module.exports = (function(){
+module.exports = function(app){
     var express = require('express');
     var UserHandler = require('../handlers/user');
     var userRouter = express.Router();
-    var userHandler = new UserHandler;
+    var userHandler = new UserHandler(app);
 
     userRouter.post('/',userHandler.create);
     userRouter.get('/',userHandler.getAll);
@@ -11,9 +11,9 @@ module.exports = (function(){
     userRouter.get('/:id/settings',userHandler.auth,userHandler.edit);
     userRouter.put('/:id/settings',userHandler.auth,userHandler.update);
     userRouter.get('/:id/friends',userHandler.friends);
-    userRouter.put('/:id/friendsAdd?:idAdd',userHandler.auth,userHandler.friendsAdd);
-    userRouter.delete('/:id/friendsDelete?:idDelete',userHandler.auth,userHandler.friendsDelete);
+    userRouter.put('/:id/friends?:idAdd',userHandler.auth,userHandler.friendsAdd);
+    userRouter.delete('/:id/friends?:idDelete',userHandler.auth,userHandler.friendsDelete);
     userRouter.get('/:id/posts',userHandler.getPosts);
 
     return userRouter;
-})();
+};

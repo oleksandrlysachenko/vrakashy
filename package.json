@@ -18,8 +18,11 @@
   "homepage": "https://github.com/oleksandrlysachenko/vrakashy#readme",
   "dependencies": {
     "body-parser": "^1.13.3",
+    "bookshelf": "^0.8.2",
     "express": "^4.13.3",
+    "knex": "^0.8.6",
     "mongodb": "^2.0.43",
-    "mongoose": "^4.1.7"
+    "mongoose": "^4.1.7",
+    "pg": "^4.4.2"
   }
 }

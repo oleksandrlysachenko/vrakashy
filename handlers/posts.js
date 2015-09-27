@@ -1,9 +1,8 @@
-var mongoose = require('mongoose');
-var UserSchame = mongoose.schemas.User;
-var PostSchame = mongoose.schemas.Post;
-var _User = mongoose.model('user', UserSchame);
-var _Post = mongoose.model('post', PostSchame);
-var Posts = function(res,req,next) {
+var Posts = function(app) {
+    //var _User = app.get('PostGre').Models.User;
+    var _Post = app.get('PostGre').Models.Post;
+
+
     this.auth = function(req,res,next){
         if (true) {
             next();
@@ -20,41 +19,50 @@ var Posts = function(res,req,next) {
             next('you don`t have permissions')
         }
     };
-    this.viewAll = function(req,res,next) {
-        _Post.find({},function(err,response){
-            if (err) {return next(err)}
-            res.status(200).send(response);
-        });
+
+    this.viewAll = function(req,res,next){
+        _Post
+            .forge()
+            .fetchAll()
+            .asCallback(function (err, response) {
+                if (err) { return next(err); }
+                res.status(200).send(response);
+            });
     };
+
     this.createPost = function(req,res,next) {
         var body = req.body;
         var post = new _Post(body);
-        post.save(function(err) {
-            if (err) {
-                return next(err)
-            }
-            //res.status(200).send('create post! ' + post);
-            _User.findByIdAndUpdate(body._author, {$push: {posts: post._id}}, function (err, response) {
-                if (err) {
-                    return next(err)
-                }
-                res.status(200).send('create post! ' + post);
+
+        post.save(body)
+            .asCallback(function(err,response){
+                if (err) {return next(err)}
+                res.status(200).send(response)
             })
-        });
     };
+
     this.viewPost = function(req,res,next) {
-        var postID = req.params.postId;
-        _Post.findById(postID,function(err,response){
-            if (err) {return next(err)}
-            res.status(200).send('view current post: ' + response);
+        var postId = req.params.postId;
+
+        _Post
+            .forge({id:postId})
+            .fetch()
+            .asCallback(function(err,response){
+                if (err) {return next(err)}
+                res.status(200).send(response);
         });
     };
+
     this.delete = function(req,res,next) {
-        var postID = req.params.postId;
-        _Post.findByIdAndRemove(postID, function(err, response){
-            if (err){ return next(err); }
-            res.status(200).send('delete current post: ' + postID);
-        });
+        var postId = req.params.postId;
+
+        _Post
+            .forge({id:postId})
+            .destroy()
+            .asCallback(function(err,response){
+                if (err) {return next(err)}
+                res.status(200).send('delete post:' + postId);
+            });
     }
 };
 module.exports = Posts;
