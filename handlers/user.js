@@ -36,7 +36,7 @@ var User = function(app){
 
         _User
             .forge({id: id})
-            .fetch()
+            .fetch({withRelated:['friends_id']})
             .asCallback(function (err,user) {
                 if (err){return next(err)}
                 res.status(200).send(user);
@@ -135,7 +135,7 @@ var User = function(app){
                     }
                     i++;
                 }
-                user.save({friends_id: test})
+                user.save({post_id: test})
                     .asCallback(function(err,result){
                         if (err) {return next(err);}
                         res.status(200).send(result);
@@ -158,7 +158,7 @@ var User = function(app){
 
         _User
             .forge({id:id})
-            .fetch()
+            .fetch({})
             .asCallback(function(err,user){
                 var result = user.toJSON();
                 if (err){return next(err)}

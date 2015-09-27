@@ -1,5 +1,5 @@
 var Posts = function(app) {
-    //var _User = app.get('PostGre').Models.User;
+    var _User = app.get('PostGre').Models.User;
     var _Post = app.get('PostGre').Models.Post;
 
 
@@ -35,9 +35,28 @@ var Posts = function(app) {
         var post = new _Post(body);
 
         post.save(body)
-            .asCallback(function(err,response){
-                if (err) {return next(err)}
-                res.status(200).send(response)
+            .then(function(post) {
+                _User
+                    .forge({id: body.author_id})
+                    .fetch()
+                    .then(function (user) {
+                        var result = user.toJSON();
+                        var test = result.post_id;
+
+                        if (test) {
+                            test.push(post.id)
+                        }
+                        else {
+                            test = [post.id]
+                        }
+                        user.save({post_id: test})
+                    })
+                    .asCallback(function (err, response) {
+                        if (err) {
+                            return next(err)
+                        }
+                        res.status(200).send(post)
+                    })
             })
     };
 
@@ -46,7 +65,7 @@ var Posts = function(app) {
 
         _Post
             .forge({id:postId})
-            .fetch()
+            .fetch({withRelated: ['author_id']})
             .asCallback(function(err,response){
                 if (err) {return next(err)}
                 res.status(200).send(response);
@@ -59,10 +78,9 @@ var Posts = function(app) {
         _Post
             .forge({id:postId})
             .destroy()
-            .asCallback(function(err,response){
-                if (err) {return next(err)}
-                res.status(200).send('delete post:' + postId);
-            });
+            .asCallback(function(err,user) {
+                        res.status(200).send(user);
+            })
     }
 };
 module.exports = Posts;
