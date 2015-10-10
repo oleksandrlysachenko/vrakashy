@@ -5,18 +5,21 @@ module.exports = function(app){
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
+    app.get('/', function (req, res, next) {
+        res.sendfile('index.html');
+    });
     app.use('/user',userRouter);
     app.use('/post',postRouter);
     app.get('/login',function(req,res,next){
         res.status(200).send('login page');
     });
-    app.get('/register',function(req,res,next){
+    app.get('/singUp',function(req,res,next){
        res.status(200).send('register page');
     });
-    app.use(function(err, req, res, next){
+    /*app.use(function(err, req, res, next){
         var status = err.status || 500;
 
         res.status(status).send(err);
-    });
+    }); */
 };
 

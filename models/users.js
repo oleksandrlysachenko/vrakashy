@@ -1,5 +1,9 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+/*var CounterSchema = Schema({
+    _id : {type: Number, required: true},
+    seq : {type: Number, default: 1}
+}, {collection: 'Counter'});*/
 var UserSchema = Schema({
     _id: Number,
     email: String,
@@ -17,4 +21,16 @@ var UserSchema = Schema({
 }, {collection: 'User', version: false});
 
 mongoose.schemas = {};
+
+/*mongoose.schemas.Counter = CounterSchema;
+var Counter = mongoose.model('Counter', CounterSchema);
+UserSchema.pre('save',function(next){
+    var doc = this;
+    Counter.findByIdAndUpdate({_id : 'entityId'},{$inc:{seq:1}}, function(err,counter){
+        if(err) {return next(err)}
+        doc._id = counter.seq;
+
+    });
+    next()
+});*/
 mongoose.schemas.User = UserSchema;

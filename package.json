@@ -20,6 +20,6 @@
     "body-parser": "^1.13.3",
     "express": "^4.13.3",
     "mongodb": "^2.0.43",
-    "mongoose": "^4.1.7"
+    "mongoose": "^4.1.0"
   }
 }

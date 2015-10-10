@@ -1,0 +1,15 @@
+<table>
+    <thead>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>DateOfBirth</th>
+    </thead>
+    <% users.forEach(function(user){ %>
+       <tr>
+           <td><%=user.name.first%></td>
+           <td><%=user.name.last%></td>
+           <td><%=user.dateOfBirth%></td>
+       </tr>
+    <%})%>
+</table>
+
