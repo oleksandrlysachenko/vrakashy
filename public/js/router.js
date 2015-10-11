@@ -1,15 +1,18 @@
 define([
     'collections/users',
     'views/users',
-    'views/singUp'
-], function(UserCollection, UserView, SingUpView){
+    'views/singUp',
+    'views/createPost'
+], function(UserCollection, UserView, SingUpView, CreatePostView){
     var Router = Backbone.Router.extend({
 
         routes: {
             "singUp": "singUp",
             "users": "users",
             "user/:id" : "user",
+            "user/:id/posts" : "userPosts",
             "posts": "posts",
+            "createPost" : "createPost",
             "*any": "any"
         },
 
@@ -17,8 +20,6 @@ define([
             var View = new SingUpView();
             return View
         },
-
-
 
         users: function(){
             var collection = new UserCollection();
@@ -34,8 +35,16 @@ define([
 
         user: function(id){},
 
+        userPosts : function(id){
+        },
+
         posts: function(){
             alert('Posts');
+        },
+
+        createPost : function(){
+            var View = new CreatePostView();
+            return View
         },
 
         any: function(){

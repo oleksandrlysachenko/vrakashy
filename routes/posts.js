@@ -5,7 +5,7 @@ module.exports = (function(){
     var postHandler = new PostHandler;
 
     postRouter.get('/',postHandler.viewAll);
-    postRouter.post('/',postHandler.auth,postHandler.createPost);
+    postRouter.post('/',postHandler.createPost);
     postRouter.get('/:postId',postHandler.viewPost);
     postRouter.delete('/:postId',postHandler.auth,postHandler.roleCheck,postHandler.delete);
 

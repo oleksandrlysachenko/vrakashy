@@ -3,12 +3,14 @@
         <th>FirstName</th>
         <th>LastName</th>
         <th>DateOfBirth</th>
+        <th>Posts</th>
     </thead>
     <% users.forEach(function(user){ %>
        <tr>
            <td><%=user.name.first%></td>
            <td><%=user.name.last%></td>
            <td><%=user.dateOfBirth%></td>
+           <td><a href="#/user/<%=user._id%>/posts">Posts</a></td>
        </tr>
     <%})%>
 </table>
