@@ -1,6 +1,6 @@
 define([
     'models/user',
-    'text!templates/user.html'
+    'text!templates/users.html'
 ], function(User, userTemplate){
     var View = Backbone.View.extend({
         el: '#content',

@@ -4,12 +4,13 @@ var PostSchame = mongoose.schemas.Post;
 var _User = mongoose.model('user', UserSchame);
 var Post = mongoose.model('post', PostSchame);
 var User = function(res,req,next){
+
     this.create = function (req, res, next) {
         var body = req.body;
         var user = new _User(body);
         user.save(function (err, user) {
             if (err) {return next(err); }
-            res.status(200).send(user);
+            res.status(200).redirect('../#users');
         });
     };
 

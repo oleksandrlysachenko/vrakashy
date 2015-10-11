@@ -1,6 +1,6 @@
 define([
     'collections/users',
-    'views/user',
+    'views/users',
     'views/singUp'
 ], function(UserCollection, UserView, SingUpView){
     var Router = Backbone.Router.extend({
