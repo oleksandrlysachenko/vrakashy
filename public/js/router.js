@@ -3,7 +3,7 @@ define([
     'views/users',
     'views/singUp',
     'views/createPost'
-], function(UserCollection, UserView, SingUpView, CreatePostView){
+], function(UserCollection, UsersView, SingUpView, CreatePostView){
     var Router = Backbone.Router.extend({
 
         routes: {
@@ -24,7 +24,7 @@ define([
         users: function(){
             var collection = new UserCollection();
             var renderView = function(){
-                var view = new UserView({
+                var view = new UsersView({
                     collection: collection
                 });
             };
@@ -39,7 +39,8 @@ define([
         },
 
         posts: function(){
-            alert('Posts');
+            var View = new PostsView();
+            return View;
         },
 
         createPost : function(){

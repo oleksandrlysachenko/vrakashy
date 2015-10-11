@@ -38,7 +38,7 @@ var Posts = function(res,req,next) {
                 if (err) {
                     return next(err)
                 }
-                res.status(200).send('create post! ' + post);
+                res.status(200).redirect('../#users');
             })
         });
     };
