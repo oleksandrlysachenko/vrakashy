@@ -20,6 +20,6 @@
     "backbone": "~1.2.3",
     "jquery": "~2.1.4",
     "text": "~2.0.14",
-    "require": "*"
+    "requirejs": "~2.1.20"
   }
 }
