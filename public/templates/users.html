@@ -1,18 +1,19 @@
 <table>
     <thead>
+        <th>User</th>
         <th>FirstName</th>
         <th>LastName</th>
-        <th>DateOfBirth</th>
-        <th>Posts</th>
+        <th>Email</th>
     </thead>
     <% users.forEach(function(user){ %>
-       <tr>
+       <tr id="<%=user._id%>">
+           <td><%=user.user%></td>
            <td><%=user.name.first%></td>
            <td><%=user.name.last%></td>
-           <td><%=user.dateOfBirth%></td>
-           <td><a href="#/user/<%=user._id%>/posts">Posts</a></td>
+           <td><%=user.email%></td>
        </tr>
     <%})%>
 </table>
-<br><button type="button" class="button " value="back" onclick="window.location.href='/'">Back</button>
+<br><button id="createUser">Create User</button>
+<button id="back">Main</button>
 

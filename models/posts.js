@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var PostSchema = Schema({
-    _id : Number,
+    //_id : Number,
+    description: String,
     tags : [{type: String}],
     content : String,
     _author : {type: Number, ref: 'user'},

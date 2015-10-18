@@ -3,7 +3,7 @@ define([], function(){
         idAttribute: '_id',
 
         urlRoot: function(){
-            return '/user';
+            return '/post';
         }
     });
 

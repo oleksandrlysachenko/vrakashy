@@ -18,7 +18,10 @@
   "homepage": "https://github.com/oleksandrlysachenko/vrakashy#readme",
   "dependencies": {
     "body-parser": "^1.13.3",
+    "connect-mongo": "^0.8.2",
+    "cookie-parser": "^1.4.0",
     "express": "^4.13.3",
+    "express-session": "^1.11.3",
     "mongodb": "^2.0.43",
     "mongoose": "^4.1.0"
   }

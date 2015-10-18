@@ -5,11 +5,10 @@ define(['router'], function(Router){
         var url = window.location.hash;
 
         Backbone.history.start({silent: true});
-
         if (fragment){
-            Backbone.history.fragment = '';
+            Backbone.history.fragment = '#';
         } else {
-            Backbone.history.fragment = '';
+            Backbone.history.fragment = '#';
             Backbone.history.navigate(url, {trigger: true});
         }
     }

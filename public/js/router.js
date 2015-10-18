@@ -1,13 +1,17 @@
 define([
-    'collections/users',
+    'views/main',
     'views/users',
-    'views/singUp',
-    'views/createPost'
-], function(UserCollection, UsersView, SingUpView, CreatePostView){
+    'views/user',
+    'views/posts',
+    'models/user',
+    'collections/users',
+    'collections/posts'
+], function(MainView,UsersView,UserView,PostsView,UserModel,UsersCollection,PostsCollection){
     var Router = Backbone.Router.extend({
 
         routes: {
-            "singUp": "singUp",
+            "" : "root",
+          "singUp": "singUp",
             "users": "users",
             "user/:id" : "user",
             "user/:id/posts" : "userPosts",
@@ -16,31 +20,67 @@ define([
             "*any": "any"
         },
 
-        singUp : function(){
-            var View = new SingUpView();
+        root: function(){
+            var View = new MainView();
             return View
         },
 
-        users: function(){
-            var collection = new UserCollection();
+        singUp : function(){
+
+         /*   var session = new Session();
             var renderView = function(){
-                var view = new UsersView({
+
+                if (!session.session.id) {console.log('OK!')}
+                var View = new SingUpView();
+                return View
+            };
+            session.fetch({reset: true});
+            session.bind('reset', renderView);
+            console.log(session); */
+
+            var View = new SingUpView();
+
+            return View
+        },
+
+        users: function() {
+            var self = this;
+            var collection = new UsersCollection();
+            collection.unbind();
+            var renderView = function () {
+                if (self.usersView) {
+                    self.usersView.undelegateEvents();
+                }
+                self.usersView = new UsersView({
                     collection: collection
                 });
+                return self;
             };
-
             collection.fetch({reset: true});
             collection.bind('reset', renderView);
         },
 
-        user: function(id){},
-
-        userPosts : function(id){
+        posts: function(){
+            var collection = new PostsCollection;
+            var renderView = function(){
+                var view = new PostsView({
+                    collection: collection
+                });
+            };
+            collection.fetch({reset: true});
+            collection.bind('reset', renderView);
         },
 
-        posts: function(){
-            var View = new PostsView();
-            return View;
+        user: function(userId){
+            var Model = new UserModel({_id : userId});
+            Model.fetch({
+                success:function(model){
+                    var view = new UserView(model.toJSON());
+                }
+            });
+        },
+
+        userPosts : function(id){
         },
 
         createPost : function(){
@@ -49,7 +89,29 @@ define([
         },
 
         any: function(){
-            alert('404');
+            var View = new MainView();
+            return View
+        },
+
+        initialize: function(){
+            /*  var a = new Session();
+            console.log(cookie.sessionID);
+            a.fetch({
+                success: function(model) {
+                    console.log(model);
+                    var result = JSON.stringify(model);
+                    console.log('resul: '+result);
+                    //if (!result.session._id) {console.log(true)}
+                }
+                ,
+                error: function(err){
+                    console.log(err)
+                }
+            }); */
+
+            //var View = new SingUpView();
+            //return View
+
         }
     });
 

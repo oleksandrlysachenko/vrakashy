@@ -5,16 +5,15 @@ var Schema = mongoose.Schema;
     seq : {type: Number, default: 1}
 }, {collection: 'Counter'});*/
 var UserSchema = Schema({
-    _id: Number,
-    email: String,
+    //_id : Number,
+    email: {type:String, default: 'example@example.com'},
     password: String,
-    nikName: String,
+    user: String,
     name: {
-        first: {type: String, default: 'Alex'},
-        last: {type: String, default: 'Pupinus'}
+        first: {type: String, default: 'First'},
+        last: {type: String, default: 'Last'}
     },
     dateOfBirth: {},
-    age: {},
     friends: [{type: Number, ref: 'user'}],
     posts: [{type: Number, ref: 'post'}],
     userStatus: {type: String, default: 'User'}
