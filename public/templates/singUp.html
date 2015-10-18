@@ -1,14 +1,17 @@
 <div class="form">
-<form action="/user" method="post">
-    Sing Up!<br><br>
-    Id:<br>
-    <input type="text" name="_id"><br>
-    First:<br>
-    <input type="text" name="name.first"><br>
-    Last:<br>
-    <input type="text" name="name.last"><br>
-    <br>
-    <button type="submit" class="button ">Submit</button>
-    <button type="button" class="button " value="back" onclick="window.location.href='/'">Back</button>
-</form>
+    <div class="form__field">
+        Sing Up!<br><br>
+        <label for="user">User:</label>
+        <input id="user" type="text" placeholder="User" required><br>
+        <label for="email">Email:</label>
+        <input id="email" type="text" placeholder="Email" required><br>
+        <label for="password">Password:</label>
+        <input id="password" type="text" placeholder="Password" required><br>
+        <label for="namefirst">First Name:</label>
+        <input id="namefirst" type="text" placeholder="First Name" required><br>
+        <label for="namelast">Last Name:</label>
+        <input id="namelast" type="text" placeholder="Last Name" required><br><br>
+        <button id="backBtn">Back</button>
+        <button id="saveBtn">Sing Up</button>
+    </div>
 </div>

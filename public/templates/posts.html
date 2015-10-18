@@ -1,0 +1,16 @@
+<table>
+    <thead>
+    <th>Description</th>
+    <th>Author</th>
+    <th>Create Date</th>
+    </thead>
+    <% posts.forEach(function(post){ %>
+    <tr id="<%=post._id%>">
+        <td><%=post.description%></td>
+        <td><%=post._author%></td>
+        <td><%=post.createDate%></td>
+    </tr>
+    <%})%>
+</table>
+<br><button id="createPost">Create User</button>
+<button id="back">Main</button>

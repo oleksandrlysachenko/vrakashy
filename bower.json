@@ -1,9 +1,9 @@
 {
-  "name": "JSGroup3",
+  "name": "Vrakashy",
   "version": "0.0.0",
-  "homepage": "https://github.com/romashka50/JSGroup3",
+  "homepage": "https://github.com/oleksandrlysachenko/vrakashy.git",
   "authors": [
-    "Roman <roma.buchuk@gmail.com>"
+    "oleksandr"
   ],
   "description": "",
   "main": "",
@@ -20,6 +20,6 @@
     "backbone": "~1.2.3",
     "jquery": "~2.1.4",
     "text": "~2.0.14",
-    "require": "*"
+    "requirejs": "~2.1.20"
   }
 }

@@ -33,12 +33,12 @@ var Posts = function(res,req,next) {
             if (err) {
                 return next(err)
             }
-            //res.status(200).send('create post! ' + post);
-            _User.findByIdAndUpdate(body._author, {$push: {posts: post._id}}, function (err, response) {
+            //res.send(post);
+           _User.findByIdAndUpdate(body._author, {$push: {posts: post._id}}, function (err, response) {
                 if (err) {
                     return next(err)
                 }
-                res.status(200).redirect('../#users');
+                res.send(post);
             })
         });
     };

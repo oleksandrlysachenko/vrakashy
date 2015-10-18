@@ -1,27 +1,52 @@
 var mongoose = require('mongoose');
 var UserSchame = mongoose.schemas.User;
 var PostSchame = mongoose.schemas.Post;
+var SessionSchame = mongoose.schemas.Session;
 var _User = mongoose.model('user', UserSchame);
 var Post = mongoose.model('post', PostSchame);
+var _Session = mongoose.model('session', SessionSchame);
 var User = function(res,req,next){
 
     this.create = function (req, res, next) {
         var body = req.body;
-        var user = new _User(body);
+        console.log(body);
+        var user = body.user;
+        var email = body.email;
+        var password = body.password;
+        var firstName = body.firstName;
+        var lastName = body.lastName;
+        var data = {
+            user : user,
+            password : password,
+            email : email || undefined,
+            name : {
+                first : firstName || undefined,
+                last : lastName || undefined
+            }
+        };
+        var user = new _User(data);
         user.save(function (err, user) {
             if (err) {return next(err); }
-            res.status(200).redirect('../#users');
+            res.send(user);
         });
     };
 
     this.auth = function(req,res,next){
-        if (true) {
-            next();
-        } else {
-            res.status(401).send('must be authorized');
-            next('must be authorized');
-        }
+        var cookie = req.cookies;
+        console.log(cookie.sessionID);
+        _Session.find({session:{ _id :cookie.sessionID}}, function(err,result){
+            if (err) {return next(err);}
+            var session = result || undefined;
+            console.log(session);
+            if (session == {}) {
+                next();
+            } else {
+                req.session.auth = false;
+                res.status(403).send(req.session)
+            }
+        });
     };
+
     this.roleCheck = function(req,res,next){ // admins
         if (true) {
             next();
@@ -34,14 +59,14 @@ var User = function(res,req,next){
         var id = req.params.id;
         _User.findById(id,function(err, response){
             if (err){ return next(err);}
-            res.status(200).send('request for user: ' + response)
+            res.status(200).send(response)
         });
     };
     this.delete = function(req,res,next){
         var id = req.params.id;
         _User.findByIdAndRemove(id, function(err, response){
             if (err){ return next(err); }
-            res.status(200).send('delete user: ' + id);
+            res.status(200).send(response);
         });
     };
     this.edit = function(req,res,next){
