@@ -3,10 +3,19 @@ define([
     'views/users',
     'views/user',
     'views/posts',
+    'views/addPost',
     'models/user',
     'collections/users',
     'collections/posts'
-], function(MainView,UsersView,UserView,PostsView,UserModel,UsersCollection,PostsCollection){
+], function(
+    MainView,
+    UsersView,
+    UserView,
+    PostsView,
+    AddPostView,
+    UserModel,
+    UsersCollection,
+    PostsCollection) {
     var Router = Backbone.Router.extend({
 
         routes: {
@@ -16,7 +25,7 @@ define([
             "user/:id" : "user",
             "user/:id/posts" : "userPosts",
             "posts": "posts",
-            "createPost" : "createPost",
+            "post" : "addPost",
             "*any": "any"
         },
 
@@ -69,6 +78,11 @@ define([
             };
             collection.fetch({reset: true});
             collection.bind('reset', renderView);
+        },
+
+        addPost: function(){
+            var View = new AddPostView();
+            return View
         },
 
         user: function(userId){
