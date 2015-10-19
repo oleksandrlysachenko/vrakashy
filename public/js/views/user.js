@@ -30,8 +30,6 @@ define([
             var targetEl = $(e.target);
             var tr = targetEl.closest('div');
             var id = tr.attr('id');
-        //    var View = new AddPostView(id);
-      //      return new AddPostView(id);
                 if (self.adView) {
                     self.adView.undelegateEvents();
                 } else{
