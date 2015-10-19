@@ -9,7 +9,8 @@ define([
         template: _.template(postTemplate),
 
         events: {
-            'click #deletePostBtn' : 'deletePost'
+            'click #deletePostBtn' : 'deletePost',
+            'click #backBtn' : 'back'
         },
 
         initialize: function(optins){
@@ -18,7 +19,7 @@ define([
 
         back: function(){
             Backbone.history.fragment = '';
-            Backbone.history.navigate('#users', {trigger: true});
+            Backbone.history.navigate('#posts', {trigger: true});
         },
 
   /*      addPost: function(e){
