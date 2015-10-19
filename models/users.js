@@ -15,7 +15,7 @@ var UserSchema = Schema({
     },
     dateOfBirth: {},
     friends: [{type: Number, ref: 'user'}],
-    posts: [{type: Number, ref: 'post'}],
+    posts: [{type: String, ref: 'post'}],
     userStatus: {type: String, default: 'User'}
 }, {collection: 'User', version: false});
 

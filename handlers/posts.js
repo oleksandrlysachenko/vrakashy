@@ -28,16 +28,22 @@ var Posts = function(res,req,next) {
     };
     this.createPost = function(req,res,next) {
         var body = req.body;
-        var post = new _Post(body);
-        post.save(function(err) {
-            if (err) {
-                return next(err)
-            }
-            //res.send(post);
-           _User.findByIdAndUpdate(body._author, {$push: {posts: post._id}}, function (err, response) {
-                if (err) {
-                    return next(err)
-                }
+        var description = body.description;
+        var tags = body.tags;
+        var content = body.content;
+        var author = body.author;
+        var data = {
+            description : description,
+            tags : tags,
+            content : content,
+            author : author
+        };
+        var post = new _Post(data);
+        post.save(function(err, postre) {
+            if (err) { return next(err) }
+           // res.send(post);
+           _User.findByIdAndUpdate(author, {$push: {posts: post._id}}, function (err, response) {
+                if (err) { return next(err) }
                 res.send(post);
             })
         });

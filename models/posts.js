@@ -5,7 +5,8 @@ var PostSchema = Schema({
     description: String,
     tags : [{type: String}],
     content : String,
-    _author : {type: Number, ref: 'user'},
+    //author : ObjectId,
+    author : {type: String, ref: 'user'},
     createDate : {type : Date, default : Date.now}
 }, {collection : 'Post'});
 

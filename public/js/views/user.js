@@ -1,7 +1,11 @@
 define([
     'models/user',
+    'views/addPost',
     'text!templates/user.html'
-], function(User, userTemplate){
+], function(
+    User,
+    AddPostView,
+    userTemplate ) {
     var View = Backbone.View.extend({
         el: '#content',
         template: _.template(userTemplate),
@@ -22,7 +26,10 @@ define([
         },
 
         addPost: function(e){
-
+            var targetEl = $(e.target);
+            var tr = targetEl.closest('div');
+            var id = tr.attr('id');
+            return new AddPostView(id);
         },
 
         delete: function(e){
