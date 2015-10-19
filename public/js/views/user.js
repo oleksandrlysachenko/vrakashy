@@ -13,7 +13,8 @@ define([
         events: {
             'click #backBtn' : 'back',
             'click #deleteBtn' : 'delete',
-            'click #addPost' : 'addPost'
+            'click #addPost' : 'addPost',
+            'click #editBtn' : 'editUser'
         },
 
         initialize: function(optins){
@@ -23,6 +24,36 @@ define([
         back: function(){
             Backbone.history.fragment = '';
             Backbone.history.navigate('#users', {trigger: true});
+        },
+
+        editUser: function(){
+            var thisEl = this.$el;
+            var targetEl = $('.form__field').attr('id');
+            var id = targetEl;
+            var data = {};
+            var user = thisEl.find('#user').val();
+            var email = thisEl.find('#email').val();
+            var password = thisEl.find('#password').val();
+            var firstName = thisEl.find('#first').val();
+            var lastName = thisEl.find('#last').val();
+            data = {
+                _id: id,
+                user: user,
+                password: password,
+                email: email ,
+                firstName: firstName,
+                lastName: lastName
+            };
+            var _user = new User(data);
+            _user.save({}, {
+                success: function(model){
+                    Backbone.history.fragment = '';
+                    Backbone.history.navigate('#users', {trigger: true});
+                },
+                error: function(response, xhr){
+                    alert(response.status);
+                }
+            });
         },
 
         addPost: function(e){

@@ -76,9 +76,24 @@ var User = function(res,req,next){
         });
     };
     this.update = function(req,res,next){
-        var id = req.params.id;
         var body = req.body;
-        _User.update({_id: id}, {$set : body}, function(err,user){
+        var id = body._id;
+        var user = body.user;
+        var email = body.email;
+        var password = body.password;
+        var firstName = body.firstName;
+        var lastName = body.lastName;
+        var data = {
+            user : user,
+            password : password,
+            email : email || undefined,
+            name : {
+                first : firstName || undefined,
+                last : lastName || undefined
+            }
+        };
+        //console.log(data);
+        _User.update({_id: id}, {$set : data}, function(err,user){
             if (err){ return next(err);}
             res.status(200).send(user);
         });

@@ -9,7 +9,7 @@ module.exports = (function(){
     userRouter.get('/:id',userHandler.view);
     userRouter.delete('/:id',userHandler.delete);
     userRouter.get('/:id/settings',userHandler.auth,userHandler.edit);
-    userRouter.put('/:id/settings',userHandler.auth,userHandler.update);
+    userRouter.put('/:id',userHandler.update);
     userRouter.get('/:id/friends',userHandler.friends);
     userRouter.put('/:id/friendsAdd?:idAdd',userHandler.auth,userHandler.friendsAdd);
     userRouter.delete('/:id/friendsDelete?:idDelete',userHandler.auth,userHandler.friendsDelete);
