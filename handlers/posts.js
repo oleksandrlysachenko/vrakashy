@@ -21,10 +21,20 @@ var Posts = function(res,req,next) {
         }
     };
     this.viewAll = function(req,res,next) {
-        _Post.find({},function(err,response){
+    /*    _Post.find({},function(err,response){
             if (err) {return next(err)}
             res.status(200).send(response);
-        });
+        }); */
+
+        _Post
+            .find()
+            .populate('author')
+            //.lean()
+            .exec(function (err, response) {
+                if (err) { return next(err); }
+                res.status(200).send(response);
+            });
+
     };
     this.createPost = function(req,res,next) {
         var body = req.body;

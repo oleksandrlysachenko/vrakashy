@@ -70,6 +70,22 @@ define([
         },
 
         posts: function(){
+
+            var self = this;
+            var collection = new PostsCollection();
+            collection.unbind();
+            var renderView = function () {
+                if (self.postView) {
+                    self.postView.undelegateEvents();
+                }
+                self.postView = new PostsView({
+                    collection: collection
+                });
+                return self;
+            };
+            collection.fetch({reset: true});
+            collection.bind('reset', renderView);
+            /*
             var collection = new PostsCollection;
             var renderView = function(){
                 var view = new PostsView({
@@ -78,6 +94,7 @@ define([
             };
             collection.fetch({reset: true});
             collection.bind('reset', renderView);
+            */
         },
 
         addPost: function(){

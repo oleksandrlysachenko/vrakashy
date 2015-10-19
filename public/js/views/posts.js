@@ -7,10 +7,16 @@ define([
         template: _.template(postsTemplate),
 
         events: {
+            'click #userListBtn' : 'usersList'
         },
 
         initialize: function(optins){
             this.render(optins);
+        },
+
+        usersList: function(){
+            Backbone.history.fragment = '';
+            Backbone.history.navigate('#users', {trigger: true});
         },
 
         render: function(optins){

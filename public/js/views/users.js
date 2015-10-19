@@ -22,8 +22,9 @@ define([
         },
 
         back: function(){
+            this.undelegateEvents();
             Backbone.history.fragment = '';
-            Backbone.history.navigate('#main', {trigger: true});
+            Backbone.history.navigate('#posts', {trigger: true});
         },
 
         viewUser: function(e){
@@ -40,7 +41,7 @@ define([
                     Backbone.history.navigate(url, {trigger: true});
                 },
                 error: function(){
-                    alert('error');
+                    alert('error users tech');
                 }
             });
         },

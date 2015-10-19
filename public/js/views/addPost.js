@@ -36,12 +36,13 @@ define([
                 success: function(model){
                     self.undelegateEvents();
                     Backbone.history.fragment = '';
-                    Backbone.history.navigate('#main', {trigger: true});
+                    Backbone.history.navigate('#posts', {trigger: true});
                 },
                 error: function(response, xhr){
                     alert(response.status);
                 }
             });
+            return self
         },
 
         render: function(optins){

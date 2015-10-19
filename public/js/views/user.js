@@ -26,10 +26,18 @@ define([
         },
 
         addPost: function(e){
+            var self = this;
             var targetEl = $(e.target);
             var tr = targetEl.closest('div');
             var id = tr.attr('id');
-            return new AddPostView(id);
+        //    var View = new AddPostView(id);
+      //      return new AddPostView(id);
+                if (self.adView) {
+                    self.adView.undelegateEvents();
+                } else{
+                self.adView = new AddPostView(id);
+                return self; }
+
         },
 
         delete: function(e){
