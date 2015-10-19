@@ -60,10 +60,20 @@ var Posts = function(res,req,next) {
     };
     this.viewPost = function(req,res,next) {
         var postID = req.params.postId;
-        _Post.findById(postID,function(err,response){
+
+        _Post
+            .findById(postID)
+            .populate('author')
+            //.lean()
+            .exec(function (err, response) {
+                if (err) { return next(err); }
+                res.status(200).send(response);
+            });
+
+     /*   _Post.findById(postID,function(err,response){
             if (err) {return next(err)}
-            res.status(200).send('view current post: ' + response);
-        });
+            res.status(200).send(response);
+        }); */
     };
     this.delete = function(req,res,next) {
         var postID = req.params.postId;

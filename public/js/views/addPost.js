@@ -42,7 +42,6 @@ define([
                     alert(response.status);
                 }
             });
-            return self
         },
 
         render: function(optins){

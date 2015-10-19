@@ -3,8 +3,10 @@ define([
     'views/users',
     'views/user',
     'views/posts',
+    'views/post',
     'views/addPost',
     'models/user',
+    'models/post',
     'collections/users',
     'collections/posts'
 ], function(
@@ -12,8 +14,10 @@ define([
     UsersView,
     UserView,
     PostsView,
+    PostView,
     AddPostView,
     UserModel,
+    PostModel,
     UsersCollection,
     PostsCollection) {
     var Router = Backbone.Router.extend({
@@ -25,7 +29,7 @@ define([
             "user/:id" : "user",
             "user/:id/posts" : "userPosts",
             "posts": "posts",
-            "post" : "addPost",
+            "post(/:id)" : "addPost",
             "*any": "any"
         },
 
@@ -71,7 +75,7 @@ define([
 
         posts: function(){
 
-            var self = this;
+      /*      var self = this;
             var collection = new PostsCollection();
             collection.unbind();
             var renderView = function () {
@@ -84,8 +88,8 @@ define([
                 return self;
             };
             collection.fetch({reset: true});
-            collection.bind('reset', renderView);
-            /*
+            collection.bind('reset', renderView); */
+
             var collection = new PostsCollection;
             var renderView = function(){
                 var view = new PostsView({
@@ -94,12 +98,22 @@ define([
             };
             collection.fetch({reset: true});
             collection.bind('reset', renderView);
-            */
+
         },
 
-        addPost: function(){
-            var View = new AddPostView();
-            return View
+        addPost: function(idPost){
+            if (!idPost) {
+                var View = new AddPostView();
+                return View
+            }
+            else {
+                var Model = new PostModel({_id : idPost});
+                Model.fetch({
+                    success: function(model){
+                        var view = new PostView(model.toJSON());
+                    }
+                })
+            }
         },
 
         user: function(userId){
