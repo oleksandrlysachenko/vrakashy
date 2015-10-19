@@ -79,7 +79,7 @@ var Posts = function(res,req,next) {
         var postID = req.params.postId;
         _Post.findByIdAndRemove(postID, function(err, response){
             if (err){ return next(err); }
-            res.status(200).send('delete current post: ' + postID);
+            res.status(200).send(response);
         });
     }
 };

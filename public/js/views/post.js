@@ -9,6 +9,7 @@ define([
         template: _.template(postTemplate),
 
         events: {
+            'click #deletePostBtn' : 'deletePost'
         },
 
         initialize: function(optins){
@@ -35,22 +36,22 @@ define([
 
         }, */
 
-    /*    delete: function(e){
-            var targetEl = $(e.target);
-            var tr = targetEl.closest('div');
-            var id = tr.attr('id');
-            var user = new User({_id:id});
+        deletePost: function(){
+            var targetEl = $('.idP').attr('id');
+            var id = targetEl;
 
-            user.destroy({
+            var post = new Post({_id:id});
+
+            post.destroy({
                 success: function(){
                     Backbone.history.fragment = '';
-                    Backbone.history.navigate('#users', {trigger: true});
+                    Backbone.history.navigate('#posts', {trigger: true});
                 },
                 error: function(){
                     alert('error');
                 }});
             return
-        }, */
+        },
 
         render: function(model){
             this.$el.html(this.template(model));
