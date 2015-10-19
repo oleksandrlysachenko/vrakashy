@@ -17,7 +17,7 @@ define([
 
         d: function(e){
                 var targetEl = $(e.target);
-                var tr = targetEl.closest('tr');
+                var tr = targetEl.closest('.currentPost');
                 var id = tr.attr('id');
                 console.log(id);
             var post = new Post({_id :id});
@@ -29,7 +29,7 @@ define([
                     Backbone.history.navigate(url, {trigger: true});
                 },
                 error: function(){
-                    alert('error users tech');
+                    alert('error :(');
                 }
             });
         },

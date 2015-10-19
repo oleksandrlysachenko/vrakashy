@@ -10,7 +10,7 @@ define([
         events: {
             'click #createUser' : 'createUser',
             'click #back' : 'back',
-            'click tr': 'viewUser'
+            'click .currentUser': 'viewUser'
         },
 
         initialize: function(optins){
@@ -29,7 +29,7 @@ define([
 
         viewUser: function(e){
             var targetEl = $(e.target);
-            var tr = targetEl.closest('tr');
+            var tr = targetEl.closest('.currentUser');
             var id = tr.attr('id');
             var User = new UserModel({_id: id});
 
@@ -41,7 +41,7 @@ define([
                     Backbone.history.navigate(url, {trigger: true});
                 },
                 error: function(){
-                    alert('error users tech');
+                    alert('error users tech!');
                 }
             });
         },

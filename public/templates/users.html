@@ -6,7 +6,7 @@
         <th>Email</th>
     </thead>
     <% users.forEach(function(user){ %>
-       <tr id="<%=user._id%>">
+       <tr id="<%=user._id%>" class="currentUser">
            <td><%=user.user%></td>
            <td><%=user.name.first%></td>
            <td><%=user.name.last%></td>
