@@ -5,6 +5,7 @@ define([
     'views/posts',
     'views/post',
     'views/addPost',
+    'views/login',
     'models/user',
     'models/post',
     'collections/users',
@@ -16,6 +17,7 @@ define([
     PostsView,
     PostView,
     AddPostView,
+    ViewLogin,
     UserModel,
     PostModel,
     UsersCollection,
@@ -24,12 +26,13 @@ define([
 
         routes: {
             "" : "root",
-          "singUp": "singUp",
+            "singUp": "singUp",
             "users": "users",
             "user/:id" : "user",
             "user/:id/posts" : "userPosts",
             "posts": "posts",
             "post(/:id)" : "addPost",
+            "login" : "login",
             "*any": "any"
         },
 
@@ -113,6 +116,11 @@ define([
 
         createPost : function(){
             var View = new CreatePostView();
+            return View
+        },
+
+        login: function(){
+            var View = new ViewLogin();
             return View
         },
 

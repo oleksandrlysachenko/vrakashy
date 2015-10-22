@@ -1,9 +1,11 @@
 define([
     'models/user',
+    'models/session',
     'views/addPost',
     'text!templates/user.html'
 ], function(
     User,
+    ModelSession,
     AddPostView,
     userTemplate ) {
     var View = Backbone.View.extend({
@@ -14,16 +16,30 @@ define([
             'click #backBtn' : 'back',
             'click #deleteBtn' : 'delete',
             'click #addPost' : 'addPost',
-            'click #editBtn' : 'editUser'
+            'click #editBtn' : 'editUser',
+            'click #logoutBtn' : 'logOut'
         },
 
         initialize: function(optins){
             this.render(optins);
+           // this.logOut(optins)
         },
 
         back: function(){
             Backbone.history.fragment = '';
             Backbone.history.navigate('#users', {trigger: true});
+        },
+
+        logOut: function(){
+            var targetEl = $('.form__field').attr('id');
+            var id = targetEl;
+            var Session = new ModelSession();
+            Session.fetch({
+                success: function(model,response){
+                    Backbone.history.fragment = '';
+                    Backbone.history.navigate('#login', {trigger: true});
+                }
+            })
         },
 
         editUser: function(){

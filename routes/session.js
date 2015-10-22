@@ -4,9 +4,9 @@ module.exports = (function(){
     var sessionRouter = express.Router();
     var sessionHandler = new SessionHandler;
 
-    sessionRouter.post('/',sessionHandler.create);
-    sessionRouter.get('/',sessionHandler.get);
-    //sessionRouter.get('/',sessionHandler.view);
+    sessionRouter.get('/',sessionHandler.del);
+    sessionRouter.get('/login?:user?:password',sessionHandler.get);
+    //sessionRouter.delete('/',sessionHandler.del);
 
     return sessionRouter;
 })();

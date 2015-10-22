@@ -5,8 +5,9 @@ module.exports = function(app){
     var postRouter = require('./posts');
     var sessionRoute = require('./session');
 
+
+    app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: true }));
     app.use(cookieParser());
 
     app.get('/', function (req, res, next) {

@@ -9,6 +9,7 @@ var User = function(res,req,next){
 
     this.create = function (req, res, next) {
         var body = req.body;
+        console.log(body);
         var user = body.user;
         var email = body.email;
         var password = body.password;

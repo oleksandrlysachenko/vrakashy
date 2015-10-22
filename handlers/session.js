@@ -5,38 +5,60 @@ var _User = mongoose.model('user', UserSchame);
 var _Session = mongoose.model('session', SessionSchame);
 var Session = function(res,req,next){
 
-    this.create = function (req, res, next) {
-        var body = req.body;
+    this.login = function (req, res, next) {
         var cookie = req.cookies;
-        var user = body.user;
+        var body = req.body;
         console.log(body);
-        _User.findOne({user:user},function(err,result){
-                if (err) {return next(err);}
+        _User.find(function(err,result){
+            if (err) { return next(err) }
             var user = result || undefined;
             if (user) {
                 req.session._id = cookie.sessionID;
                 req.session.user = user.user;
+                req.session.userID = user._id;
                 req.session.auth = true;
-                console.log(cookie.sessionID);
-                res.send(user)
+                console.log('true');
+                res.send(result)
             }
             else {
+                console.log('false');
                 res.send(user)
             }
             })
     };
 
     this.get = function (req, res, next) {
-
-        _Session.find(function(err,result){
-            if (err) {return next(err);}
-            //var user = result || undefined;
-            //if (user) { req.session._id = user.id; }
-       //     console.log(result);
-            res.send(result)
+        var cookie = req.cookies;
+        var user = req.query.user;
+        var password = req.query.password;
+        _User.findOne({user:user,password:password}, function(err,result){
+            //console.log(result);
+            if (err) { return next(err) }
+            var user = result || undefined;
+            //console.log(user);
+            if (user) {
+                req.session._id = cookie.sessionID.substr(2,32);
+                req.session.user = user.user;
+                req.session.userID = user._id;
+                req.session.auth = true;
+              //  console.log('true');
+              //  console.log(result);
+                res.send(user)
+            }
+            else {
+             //   console.log('false');
+                res.send(user)
+            }
         })
     };
 
+    this.del = function(req,res,next){
+        _Session.find(function(err,result){
+            if (err) { return next(err) }
+            req.session.destroy();
+            res.send(result);
+        });
+    }
 };
 
 module.exports = Session;
