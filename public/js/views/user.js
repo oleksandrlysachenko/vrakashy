@@ -13,7 +13,9 @@ define([
         template: _.template(userTemplate),
 
         events: {
-            'click #backBtn' : 'back',
+            'click #userListBtn' : 'userListBtn',
+            'click #postsListBtn' : 'postsListBtn',
+            'click #myPost' : 'myPost',
             'click #deleteBtn' : 'delete',
             'click #addPost' : 'addPost',
             'click #editBtn' : 'editUser',
@@ -22,12 +24,24 @@ define([
 
         initialize: function(optins){
             this.render(optins);
-           // this.logOut(optins)
         },
 
-        back: function(){
+        userListBtn: function(){
             Backbone.history.fragment = '';
             Backbone.history.navigate('#users', {trigger: true});
+        },
+
+        postsListBtn: function(){
+            Backbone.history.fragment = '';
+            Backbone.history.navigate('#posts', {trigger: true});
+        },
+
+        myPost: function(){
+            var targetEl = $('.form__field').attr('id');
+            var id = targetEl;
+            var url = '#user/'+id+'/posts';
+            Backbone.history.fragment = '';
+            Backbone.history.navigate(url, {trigger: true});
         },
 
         logOut: function(){

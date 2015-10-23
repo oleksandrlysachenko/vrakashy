@@ -6,10 +6,20 @@ define([
         el: '#content',
         template: _.template(createPostTemplate),
         events: {
-            'click #addPostBtn' : 'addPost'
+            'click #addPostBtn' : 'addPost',
+            'click #backToUserBtn' : 'backToUser'
         },
         initialize: function(optins){
             this.render(optins);
+        },
+
+        backToUser: function(e){
+            var targetEl = $(e.target);
+            var element = targetEl.closest('div');
+            var id = element.attr('id');
+            var url = '#user/'+id;
+            Backbone.history.fragment = '';
+            Backbone.history.navigate(url, {trigger: true});
         },
 
         addPost: function(e){

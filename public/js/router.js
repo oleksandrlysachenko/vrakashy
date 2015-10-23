@@ -6,6 +6,7 @@ define([
     'views/post',
     'views/addPost',
     'views/login',
+    'views/userPosts',
     'models/user',
     'models/post',
     'collections/users',
@@ -18,6 +19,7 @@ define([
     PostView,
     AddPostView,
     ViewLogin,
+    ViewUserPosts,
     UserModel,
     PostModel,
     UsersCollection,
@@ -31,7 +33,7 @@ define([
             "user/:id" : "user",
             "user/:id/posts" : "userPosts",
             "posts": "posts",
-            "post(/:id)" : "addPost",
+            "post/:id" : "viewPost",
             "login" : "login",
             "*any": "any"
         },
@@ -42,18 +44,6 @@ define([
         },
 
         singUp : function(){
-
-         /*   var session = new Session();
-            var renderView = function(){
-
-                if (!session.session.id) {console.log('OK!')}
-                var View = new SingUpView();
-                return View
-            };
-            session.fetch({reset: true});
-            session.bind('reset', renderView);
-            console.log(session); */
-
             var View = new SingUpView();
             return View
         },
@@ -88,19 +78,13 @@ define([
 
         },
 
-        addPost: function(idPost){
-            if (!idPost) {
-                var View = new AddPostView();
-                return View
-            }
-            else {
+        viewPost: function(idPost){
                 var Model = new PostModel({_id : idPost});
                 Model.fetch({
                     success: function(model){
                         var view = new PostView(model.toJSON());
                     }
                 })
-            }
         },
 
         user: function(userId){
@@ -117,6 +101,15 @@ define([
         },
 
         userPosts : function(id){
+            var collection = new PostsCollection;
+            collection.url = 'user/'+id+'/posts';
+            var renderView = function(){
+                var view = new ViewUserPosts({
+                    collection: collection
+                });
+            };
+            collection.fetch({reset: true});
+            collection.bind('reset', renderView)
         },
 
         createPost : function(){

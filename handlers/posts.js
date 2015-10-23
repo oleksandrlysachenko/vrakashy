@@ -58,6 +58,7 @@ var Posts = function(res,req,next) {
             })
         });
     };
+
     this.viewPost = function(req,res,next) {
         var postID = req.params.postId;
 
@@ -70,11 +71,8 @@ var Posts = function(res,req,next) {
                 res.status(200).send(response);
             });
 
-     /*   _Post.findById(postID,function(err,response){
-            if (err) {return next(err)}
-            res.status(200).send(response);
-        }); */
     };
+
     this.delete = function(req,res,next) {
         var postID = req.params.postId;
         _Post.findByIdAndRemove(postID, function(err, response){
