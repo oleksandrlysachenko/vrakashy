@@ -6,7 +6,7 @@ module.exports = (function(){
 
     userRouter.post('/',userHandler.create);
     userRouter.get('/',userHandler.getAll);
-    userRouter.get('/:id',userHandler.view);
+    userRouter.get('/:id',userHandler.auth,userHandler.view);
     userRouter.delete('/:id',userHandler.delete);
     userRouter.get('/:id/settings',userHandler.auth,userHandler.edit);
     userRouter.put('/:id',userHandler.update);

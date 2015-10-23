@@ -32,19 +32,12 @@ var User = function(res,req,next){
     };
 
     this.auth = function(req,res,next){
-        var cookie = req.cookies;
-        console.log(cookie.sessionID);
-        _Session.find({session:{ _id :cookie.sessionID}}, function(err,result){
-            if (err) {return next(err);}
-            var session = result || undefined;
-            console.log(session);
-            if (session == {}) {
-                next();
-            } else {
-                req.session.auth = false;
-                res.status(403).send(req.session)
-            }
-        });
+        if (req.session._id) {
+            next();
+        }
+        else {
+            res.status(401).send();
+        }
     };
 
     this.roleCheck = function(req,res,next){ // admins

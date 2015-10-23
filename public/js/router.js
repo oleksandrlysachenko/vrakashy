@@ -83,7 +83,8 @@ define([
                 });
             };
             collection.fetch({reset: true});
-            collection.bind('reset', renderView);
+            collection.bind('reset', renderView)
+
 
         },
 
@@ -107,6 +108,10 @@ define([
             Model.fetch({
                 success:function(model){
                     var view = new UserView(model.toJSON());
+                },
+                error: function(err,xhr){
+                    Backbone.history.fragment = '';
+                    Backbone.history.navigate('#login', {trigger: true});
                 }
             });
         },
