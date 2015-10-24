@@ -64,6 +64,7 @@ var User = function(res,req,next){
     };
     this.edit = function(req,res,next){
         var id = req.params.id;
+        console.log(id);
         _User.findById(id,function(err, response){
             if (err){ return next(err);}
             res.status(200).send('user ' + id + ' request for settings :' + response);
@@ -121,15 +122,18 @@ var User = function(res,req,next){
         });
     };
     this.getAll = function(req,res,next){
-        _User
-            .find()
-            .populate('posts')
-            .populate('friends')
-            //.lean()
-            .exec(function (err, response) {
-                if (err) { return next(err); }
-                res.status(200).send(response);
-            });
+            _User
+                .find()
+                .populate('posts')
+                .populate('friends')
+                //.lean()
+                .exec(function (err, response) {
+                    if (err) {
+                        return next(err);
+                    }
+                    res.status(200).send(response);
+                });
+
     };
     this.getPosts = function(req,res,next){
         var id = req.params.id;

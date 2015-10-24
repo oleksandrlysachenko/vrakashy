@@ -1,0 +1,16 @@
+<div class="currentUser">
+    <table>
+    <thead>
+    <th>Description</th>
+    <th>Create Date</th>
+    </thead>
+    <% posts.forEach(function(post){ %>
+    <tr id="<%=post._id%>" class="currentPost">
+        <td><%=post.description%></td>
+        <td><%=post.createDate%></td>
+    </tr>
+    <%})%>
+</table>
+<br><button id="backToUserBtn">Back</button>
+<p>* to get post click a table row</p>
+</div>

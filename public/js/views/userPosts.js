@@ -1,13 +1,13 @@
 define([
     'models/post',
-    'text!templates/posts.html'
+    'text!templates/userPosts.html'
 ], function(Post, postsTemplate){
     var View = Backbone.View.extend({
         el: '#content',
         template: _.template(postsTemplate),
 
         events: {
-            'click #userListBtn' : 'usersList',
+            'click #backToUserBtn' : 'backToUserBtn',
             'click .currentPost' : 'd'
         },
 
@@ -34,15 +34,21 @@ define([
             });
         },
 
-        usersList: function(){
+        backToUserBtn: function(e){
+            var targetEl = $(e.target);
+            var element = targetEl.closest('.currentUser');
+            var id = element.attr('id');
+            var url = '#user/' + id;
             Backbone.history.fragment = '';
-            Backbone.history.navigate('#users', {trigger: true});
+            Backbone.history.navigate(url, {trigger: true});
         },
 
         render: function(optins){
             var collection = optins.collection.toJSON();
-            console.log(collection);
             this.$el.html(this.template({posts: collection}));
+            console.log(optins);
+            var id = optins.id;
+            $('.currentUser').attr('id',id);
             return this;
         }
     });

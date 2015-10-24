@@ -41,7 +41,7 @@ define([
                     Backbone.history.navigate(url, {trigger: true});
                 },
                 error: function(){
-                    alert('error users tech!');
+                    alert('Please Log In!');
                 }
             });
         },

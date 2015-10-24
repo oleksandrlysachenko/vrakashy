@@ -66,11 +66,17 @@ define([
         },
 
         posts: function(){
+            var self = this;
             var collection = new PostsCollection;
+            collection.unbind();
             var renderView = function(){
-                var view = new PostsView({
+                if (self.usersView) {
+                    self.usersView.undelegateEvents();
+                }
+                self.usersView = new PostsView({
                     collection: collection
                 });
+             //   return self;
             };
             collection.fetch({reset: true});
             collection.bind('reset', renderView)
@@ -105,7 +111,8 @@ define([
             collection.url = 'user/'+id+'/posts';
             var renderView = function(){
                 var view = new ViewUserPosts({
-                    collection: collection
+                    collection: collection,
+                    id: id
                 });
             };
             collection.fetch({reset: true});
