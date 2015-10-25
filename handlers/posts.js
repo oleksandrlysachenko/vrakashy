@@ -5,11 +5,11 @@ var _User = mongoose.model('user', UserSchame);
 var _Post = mongoose.model('post', PostSchame);
 var Posts = function(res,req,next) {
     this.auth = function(req,res,next){
-        if (true) {
+        if (req.session._id) {
             next();
-        } else {
-            res.status(401).send('must be authorized');
-            next('must be authorized');
+        }
+        else {
+            res.status(401).send();
         }
     };
     this.roleCheck = function(req,res,next){ // admins

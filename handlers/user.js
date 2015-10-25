@@ -9,12 +9,13 @@ var User = function(res,req,next){
 
     this.create = function (req, res, next) {
         var body = req.body;
-        console.log(body);
+        var cookie = req.cookies;
         var user = body.user;
         var email = body.email;
         var password = body.password;
         var firstName = body.firstName;
         var lastName = body.lastName;
+        var userStatus = body.userStatus;
         var data = {
             user : user,
             password : password,
@@ -22,15 +23,19 @@ var User = function(res,req,next){
             name : {
                 first : firstName || undefined,
                 last : lastName || undefined
-            }
+            },
+            userStatus : userStatus || 'User'
         };
         var user = new _User(data);
-        user.save(function (err, user) {
+        user.save(function (err, response) {
             if (err) {return next(err); }
-            res.send(user);
+            req.session._id = cookie.sessionID;
+            req.session.user = response.user;
+            req.session.userID = response._id;
+            req.session.auth = true;
+            res.send(response);
         });
     };
-
     this.auth = function(req,res,next){
         if (req.session._id) {
             next();
@@ -40,18 +45,19 @@ var User = function(res,req,next){
         }
     };
 
-    this.roleCheck = function(req,res,next){ // admins
-        if (true) {
-            next();
-        } else {
-            res.status(403).send('you don`t have permissions');
-            next('you don`t have permissions')
-        }
-    };
     this.view = function(req, res, next){
         var id = req.params.id;
+        console.log('id ='+id);
         _User.findById(id,function(err, response){
             if (err){ return next(err);}
+            res.status(200).send(response)
+        });
+    };
+    this.authUser = function(req,res,next){
+        var id = req.session.userID;
+        console.log(id);
+        _User.findById(id, function(err, response){
+            if (err) { return next(err) }
             res.status(200).send(response)
         });
     };
@@ -60,14 +66,6 @@ var User = function(res,req,next){
         _User.findByIdAndRemove(id, function(err, response){
             if (err){ return next(err); }
             res.status(200).send(response);
-        });
-    };
-    this.edit = function(req,res,next){
-        var id = req.params.id;
-        console.log(id);
-        _User.findById(id,function(err, response){
-            if (err){ return next(err);}
-            res.status(200).send('user ' + id + ' request for settings :' + response);
         });
     };
     this.update = function(req,res,next){
@@ -91,34 +89,6 @@ var User = function(res,req,next){
         _User.update({_id: id}, {$set : data}, function(err,user){
             if (err){ return next(err);}
             res.status(200).send(user);
-        });
-    };
-    this.friends = function(req,res,next){
-        var id = req.params.id;
-        _User
-            .findById({_id: id})
-            .populate('friends')
-            .exec(function(err,response){
-            if (err){ return next(err);}
-            res.status(200).send('user ' + id + ' friends list: ' + response.friends);
-        });
-    };
-    this.friendsAdd = function(req,res,next){
-        var id = req.params.id;
-        var idAdd = req.query.idAdd;
-        _User.findByIdAndUpdate(id, {$push: {friends: idAdd}}, function(err, response){
-            if (err) {return next(err);}
-            res.status(200).send('user ' + id + ' add ' + idAdd +
-            ' to friends list');
-        });
-    };
-    this.friendsDelete = function(req,res,next){
-        var id = req.params.id;
-        var idDelete = req.query.idDelete;
-         _User.findByIdAndUpdate(id, {$pull: {friends: idDelete}}, function(err,response){
-            if (err){return next(err)}
-            res.status(200).send('user ' + id + ' delete ' + idDelete +
-            ' from friends list');
         });
     };
     this.getAll = function(req,res,next){

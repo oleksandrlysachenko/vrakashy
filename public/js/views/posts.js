@@ -1,18 +1,52 @@
 define([
     'models/post',
+    'models/user',
     'text!templates/posts.html'
-], function(Post, postsTemplate){
+], function(
+    Post,
+    ModelUser,
+    postsTemplate
+){
     var View = Backbone.View.extend({
         el: '#content',
         template: _.template(postsTemplate),
 
         events: {
             'click #userListBtn' : 'usersList',
-            'click .currentPost' : 'd'
+            'click .currentPost' : 'd',
+            'click #myPageBtn' : 'myPage',
+            'click #singUpBtn' : 'singUp'
         },
 
         initialize: function(optins){
+            this.auth(optins);
             this.render(optins);
+        },
+
+        auth: function(optins) {
+            var _User = new ModelUser();
+            _User.fetch({
+                success: function (model, response) {
+                    $('.pageUser').attr('id', response._id);
+                },
+                error: function(){
+                    $('p').hide();
+                    $('#navigate').append('<button id="singUpBtn">Sing Up</button>');
+                    $('.myPage-UI').text('Login');
+                }
+            })
+        },
+
+        singUp: function(){
+            Backbone.history.fragment = '';
+            Backbone.history.navigate('singUp', {trigger: true});
+        },
+
+        myPage: function(){
+            var id = $('.pageUser').attr('id');
+            var url = 'user/' + id;
+            Backbone.history.fragment = '';
+            Backbone.history.navigate(url, {trigger: true});
         },
 
         d: function(e){
@@ -29,7 +63,7 @@ define([
                     Backbone.history.navigate(url, {trigger: true});
                 },
                 error: function(){
-                    alert('error :(');
+                    alert('Please log in!');
                 }
             });
         },

@@ -39,6 +39,7 @@ define([
             var element = targetEl.closest('.currentUser');
             var id = element.attr('id');
             var url = '#user/' + id;
+            this.undelegateEvents();
             Backbone.history.fragment = '';
             Backbone.history.navigate(url, {trigger: true});
         },

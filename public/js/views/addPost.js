@@ -6,7 +6,7 @@ define([
         el: '#content',
         template: _.template(createPostTemplate),
         events: {
-            'click #addPostBtn' : 'addPost',
+            'click #addBtn' : 'addPost',
             'click #backToUserBtn' : 'backToUser'
         },
         initialize: function(optins){
@@ -18,6 +18,7 @@ define([
             var element = targetEl.closest('div');
             var id = element.attr('id');
             var url = '#user/'+id;
+            this.undelegateEvents();
             Backbone.history.fragment = '';
             Backbone.history.navigate(url, {trigger: true});
         },

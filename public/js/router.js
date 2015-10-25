@@ -7,6 +7,7 @@ define([
     'views/addPost',
     'views/login',
     'views/userPosts',
+    'views/singUp',
     'models/user',
     'models/post',
     'collections/users',
@@ -20,6 +21,7 @@ define([
     AddPostView,
     ViewLogin,
     ViewUserPosts,
+    ViewSingUp,
     UserModel,
     PostModel,
     UsersCollection,
@@ -32,6 +34,7 @@ define([
             "users": "users",
             "user/:id" : "user",
             "user/:id/posts" : "userPosts",
+            "user/:id/post" : "userAddPost",
             "posts": "posts",
             "post/:id" : "viewPost",
             "login" : "login",
@@ -44,7 +47,7 @@ define([
         },
 
         singUp : function(){
-            var View = new SingUpView();
+            var View = new ViewSingUp();
             return View
         },
 
@@ -61,6 +64,7 @@ define([
                 });
                 return self;
             };
+            collection.url = 'user/all';
             collection.fetch({reset: true});
             collection.bind('reset', renderView);
         },
@@ -70,13 +74,13 @@ define([
             var collection = new PostsCollection;
             collection.unbind();
             var renderView = function(){
-                if (self.usersView) {
-                    self.usersView.undelegateEvents();
+                if (self.postsView) {
+                    self.postsView.undelegateEvents();
                 }
-                self.usersView = new PostsView({
+                self.postsView = new PostsView({
                     collection: collection
                 });
-             //   return self;
+                return self;
             };
             collection.fetch({reset: true});
             collection.bind('reset', renderView)
@@ -96,8 +100,9 @@ define([
         user: function(userId){
             var Model = new UserModel({_id : userId});
             Model.fetch({
-                success:function(model){
-                    var view = new UserView(model.toJSON());
+                success:function(model,response){
+                    var result = response;
+                    var view = new UserView(result);
                 },
                 error: function(err,xhr){
                     Backbone.history.fragment = '';
@@ -107,20 +112,26 @@ define([
         },
 
         userPosts : function(id){
+            var self = this;
             var collection = new PostsCollection;
+            collection.unbind();
             collection.url = 'user/'+id+'/posts';
             var renderView = function(){
-                var view = new ViewUserPosts({
+                if (self.postsView) {
+                    self.postsView.undelegateEvents();
+                }
+                self.postsView = new ViewUserPosts({
                     collection: collection,
                     id: id
                 });
+                return self;
             };
             collection.fetch({reset: true});
             collection.bind('reset', renderView)
         },
 
-        createPost : function(){
-            var View = new CreatePostView();
+        userAddPost: function(userID){
+            var View = new AddPostView(userID);
             return View
         },
 
@@ -135,24 +146,6 @@ define([
         },
 
         initialize: function(){
-            /*  var a = new Session();
-            console.log(cookie.sessionID);
-            a.fetch({
-                success: function(model) {
-                    console.log(model);
-                    var result = JSON.stringify(model);
-                    console.log('resul: '+result);
-                    //if (!result.session._id) {console.log(true)}
-                }
-                ,
-                error: function(err){
-                    console.log(err)
-                }
-            }); */
-
-            //var View = new SingUpView();
-            //return View
-
         }
     });
 

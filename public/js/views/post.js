@@ -1,8 +1,10 @@
 define([
     'models/post',
+    'models/user',
     'text!templates/post.html'
 ], function(
     Post,
+    ModelUser,
     postTemplate ) {
     var View = Backbone.View.extend({
         el: '#content',
@@ -14,7 +16,20 @@ define([
         },
 
         initialize: function(optins){
+            this.auth(optins);
             this.render(optins);
+        },
+
+        auth: function(optins) {
+            var _User = new ModelUser();
+            _User.fetch({
+                success: function (model, response) {
+                    $('.pageUser').attr('id', response._id);
+                    if (response.userStatus == 'User') {
+                        $('.admin').remove();
+                    }
+                }
+            })
         },
 
         back: function(){

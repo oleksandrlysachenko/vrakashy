@@ -5,14 +5,11 @@ module.exports = (function(){
     var userHandler = new UserHandler;
 
     userRouter.post('/',userHandler.create);
-    userRouter.get('/',userHandler.getAll);
+    userRouter.get('/all',userHandler.getAll);
     userRouter.get('/:id',userHandler.auth,userHandler.view);
-    userRouter.delete('/:id',userHandler.delete);
-    userRouter.get('/:id/settings',userHandler.auth,userHandler.edit);
+    userRouter.get('/',userHandler.auth,userHandler.authUser);
+    userRouter.delete('/:id',userHandler.auth,userHandler.delete);
     userRouter.put('/:id',userHandler.update);
-    userRouter.get('/:id/friends',userHandler.friends);
-    userRouter.put('/:id/friendsAdd?:idAdd',userHandler.auth,userHandler.friendsAdd);
-    userRouter.delete('/:id/friendsDelete?:idDelete',userHandler.auth,userHandler.friendsDelete);
     userRouter.get('/:id/posts',userHandler.getPosts);
 
     return userRouter;

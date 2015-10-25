@@ -5,18 +5,18 @@ define([
         el: '#content',
         template: _.template(mainTemplate),
         events: {
-            'click #usersBtn': 'usersBtn',
-            'click #postsBtn': 'postsBtn'
+            'click #loginBtn': 'login',
+            'click #singUpBtn': 'singUp'
         },
 
-        usersBtn: function(){
+        login: function(){
             Backbone.history.fragment = '';
-            Backbone.history.navigate('#users', {trigger: true});
+            Backbone.history.navigate('#login', {trigger: true});
         },
 
-        postsBtn: function(){
+        singUp: function(){
             Backbone.history.fragment = '';
-            Backbone.history.navigate('#posts', {trigger: true});
+            Backbone.history.navigate('#singUp', {trigger: true});
         },
 
         initialize: function(){

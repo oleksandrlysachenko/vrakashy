@@ -62,27 +62,3 @@ var Session = function(res,req,next){
 };
 
 module.exports = Session;
-
-/*app.get('/login',function(req,res,next){
-    var body = req.body;
-    var user = body.user;
-    var password = body.password;
-
-    var data = {
-        user : user,
-        password: password
-    };
-
-    var session = new _Session(data);
-
-    req.session.user = user;
-    req.session.password = password;
-    console.log(body);
-    console.log(req.session);
-    res.send(req.session);
-});
-
-app.get('/singUp',function(req,res,next){
-    res.status(200).send('register page');
-});
-*/

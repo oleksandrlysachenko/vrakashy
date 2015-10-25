@@ -23,10 +23,27 @@ define([
         },
 
         initialize: function(optins){
+            this.auth(optins);
             this.render(optins);
         },
 
-        userListBtn: function(){
+        auth: function(optins) {
+            var _User = new User();
+            _User.fetch({
+                success: function (model, response) {
+                    $('.pageUser').attr('id', response._id);
+                    if (response.userStatus == 'User') {
+                        $('.admin').remove();
+                    }
+                    if (optins._id != response._id) {
+                        $('.addPost').remove();
+                        $('.edit').remove();
+                    }
+                }
+            })
+        },
+
+        userListBtn: function(e){
             Backbone.history.fragment = '';
             Backbone.history.navigate('#users', {trigger: true});
         },
@@ -40,6 +57,7 @@ define([
             var targetEl = $('.form__field').attr('id');
             var id = targetEl;
             var url = '#user/'+id+'/posts';
+            this.undelegateEvents();
             Backbone.history.fragment = '';
             Backbone.history.navigate(url, {trigger: true});
         },
@@ -50,8 +68,9 @@ define([
             var Session = new ModelSession();
             Session.fetch({
                 success: function(model,response){
+                    $('.pageUser').attr('id','');
                     Backbone.history.fragment = '';
-                    Backbone.history.navigate('#login', {trigger: true});
+                    Backbone.history.navigate('#main', {trigger: true});
                 }
             })
         },
@@ -86,17 +105,12 @@ define([
             });
         },
 
-        addPost: function(e){
-            var self = this;
-            var targetEl = $(e.target);
-            var tr = targetEl.closest('div');
-            var id = tr.attr('id');
-                if (self.adView) {
-                    self.adView.undelegateEvents();
-                } else{
-                self.adView = new AddPostView(id);
-                return self; }
-
+        addPost: function(){
+            var id = $('.pageUser').attr('id');
+            var url = '#user/'+id+'/post';
+            this.undelegateEvents();
+            Backbone.history.fragment = '';
+            Backbone.history.navigate(url, {trigger: true});
         },
 
         delete: function(e){

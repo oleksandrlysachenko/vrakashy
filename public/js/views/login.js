@@ -9,7 +9,7 @@ define([
         el: '#content',
         template: _.template(TemplateLogin),
         events: {
-            'click #loginBtn' : 'login'
+            'click #logBtn' : 'login'
         },
 
         login: function(){
@@ -25,6 +25,7 @@ define([
             Session.fetch({
                 success: function(model,response){
                     var url = '#user/' + response._id;
+
                     Backbone.history.fragment = '';
                     Backbone.history.navigate(url, {trigger: true});
                 },
