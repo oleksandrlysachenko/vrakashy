@@ -4,6 +4,7 @@ module.exports = (function(){
     var userRouter = express.Router();
     var userHandler = new UserHandler;
 
+    userRouter.get('/demo',userHandler.demo);
     userRouter.post('/',userHandler.create);
     userRouter.get('/all',userHandler.getAll);
     userRouter.get('/:id',userHandler.auth,userHandler.view);

@@ -111,6 +111,27 @@ var User = function(res,req,next){
                 if (err) {return next(err)}
                 res.status(200).send(response.posts)
             });
+    };
+    this.demo = function(req,res,next){
+        var admin = {
+            user : 'admin',
+            password : 'admin',
+            userStatus: 'Admin'
+        };
+        var user = {
+            user : 'user',
+            password : 'user',
+            userStatus: 'User'
+        };
+        var Admin = new _User(admin);
+        var User = new _User(user);
+        Admin.save(admin,function(err,response){
+            if (err) {return next(err)}
+            User.save(user,function(err,response){
+                if (err) {return next(err)}
+                res.status(200).send(response);
+            })
+        })
     }
 };
 

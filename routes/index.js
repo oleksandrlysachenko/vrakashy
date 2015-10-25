@@ -17,6 +17,7 @@ module.exports = function(app){
     app.use('/post',postRouter);
     app.use('/session',sessionRoute);
 
+
     /*app.use(function(err, req, res, next){
         var status = err.status || 500;
 
