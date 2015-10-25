@@ -5,28 +5,6 @@ var _User = mongoose.model('user', UserSchame);
 var _Session = mongoose.model('session', SessionSchame);
 var Session = function(res,req,next){
 
-    this.login = function (req, res, next) {
-        var cookie = req.cookies;
-        var body = req.body;
-        console.log(body);
-        _User.find(function(err,result){
-            if (err) { return next(err) }
-            var user = result || undefined;
-            if (user) {
-                req.session._id = cookie.sessionID;
-                req.session.user = user.user;
-                req.session.userID = user._id;
-                req.session.auth = true;
-                console.log('true');
-                res.send(result)
-            }
-            else {
-                console.log('false');
-                res.send(user)
-            }
-            })
-    };
-
     this.get = function (req, res, next) {
         var cookie = req.cookies;
         var user = req.query.user;

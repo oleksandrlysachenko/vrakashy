@@ -6,9 +6,19 @@ define([
         template: _.template(mainTemplate),
         events: {
             'click #loginBtn': 'login',
-            'click #singUpBtn': 'singUp'
+            'click #singUpBtn': 'singUp',
+            'click #usersBtn' : 'users',
+            'click #postsBtn' : 'posts'
         },
 
+        users: function() {
+            Backbone.history.fragment = '';
+            Backbone.history.navigate('#users', {trigger: true});
+        },
+        posts: function() {
+            Backbone.history.fragment = '';
+            Backbone.history.navigate('#posts', {trigger: true});
+        },
         login: function(){
             Backbone.history.fragment = '';
             Backbone.history.navigate('#login', {trigger: true});

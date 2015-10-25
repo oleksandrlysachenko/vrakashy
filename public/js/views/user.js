@@ -123,11 +123,8 @@ define([
                 success: function(){
                     Backbone.history.fragment = '';
                     Backbone.history.navigate('#users', {trigger: true});
-                },
-                error: function(){
-                    alert('error');
                 }});
-            return
+
         },
 
         render: function(model){
