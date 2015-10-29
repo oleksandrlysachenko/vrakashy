@@ -25,7 +25,7 @@ define([
             _User.fetch({
                 success: function (model, response) {
                     $('.pageUser').attr('id', response._id);
-                    if (response.userStatus == 'User') {
+                    if ((response.userStatus == 'User') && (response._id != optins.author._id)) {
                         $('.admin').remove();
                     }
                 }
@@ -49,9 +49,9 @@ define([
                     Backbone.history.navigate('#posts', {trigger: true});
                 },
                 error: function(){
-                    alert('error');
+                    alert('this');
                 }});
-            return
+
         },
 
         render: function(model){

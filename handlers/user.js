@@ -3,7 +3,7 @@ var UserSchame = mongoose.schemas.User;
 var PostSchame = mongoose.schemas.Post;
 var SessionSchame = mongoose.schemas.Session;
 var _User = mongoose.model('user', UserSchame);
-var Post = mongoose.model('post', PostSchame);
+var _Post = mongoose.model('post', PostSchame);
 var _Session = mongoose.model('session', SessionSchame);
 var User = function(res,req,next){
 
@@ -63,6 +63,11 @@ var User = function(res,req,next){
         var id = req.params.id;
         _User.findByIdAndRemove(id, function(err, response){
             if (err){ return next(err); }
+            _Post.find({author: id})
+                .remove()
+                .exec(function(err,respo){
+                if (err){ return next(err); }
+            });
             res.status(200).send(response);
         });
     };
