@@ -54,10 +54,11 @@ define([
         },
 
         myPost: function(){
+            var self = this;
             var targetEl = $('.form__field').attr('id');
             var id = targetEl;
             var url = '#user/'+id+'/posts';
-            this.undelegateEvents();
+            self.undelegateEvents();
             Backbone.history.fragment = '';
             Backbone.history.navigate(url, {trigger: true});
         },

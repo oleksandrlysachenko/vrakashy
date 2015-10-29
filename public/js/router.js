@@ -47,8 +47,11 @@ define([
         },
 
         singUp : function(){
-            var View = new ViewSingUp();
-            return View
+            var self = this;
+            if (self.renderView){
+                self.renderView.undelegateEvents();
+            }
+            self.renderView = new ViewSingUp();
         },
 
         users: function() {
@@ -131,8 +134,14 @@ define([
         },
 
         userAddPost: function(userID){
-            var View = new AddPostView(userID);
-            return View
+            var self = this;
+            if (self.renderView){
+                self.renderView.undelegateEvents();
+              }
+            self.renderView = new AddPostView(userID);
+            // return self;
+            //var View = new AddPostView(userID);
+            //return View
         },
 
         login: function(){

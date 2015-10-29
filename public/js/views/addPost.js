@@ -14,11 +14,12 @@ define([
         },
 
         backToUser: function(e){
+            var self = this;
             var targetEl = $(e.target);
             var element = targetEl.closest('div');
             var id = element.attr('id');
             var url = '#user/'+id;
-            this.undelegateEvents();
+            self.undelegateEvents();
             Backbone.history.fragment = '';
             Backbone.history.navigate(url, {trigger: true});
         },
