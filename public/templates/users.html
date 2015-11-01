@@ -1,23 +1,25 @@
-<table>
-    <thead>
-        <th>User</th>
-        <th>FirstName</th>
-        <th>LastName</th>
-        <th>Email</th>
-    </thead>
-    <% users.forEach(function(user){ %>
-       <tr id="<%=user._id%>" class="currentUser">
-           <td><%=user.user%></td>
-           <td><%=user.name.first%></td>
-           <td><%=user.name.last%></td>
-           <td><%=user.email%></td>
+<div class="form">
+    <table>
+        <thead>
+            <th>User</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Email</th>
+        </thead>
+        <% users.forEach(function(user){ %>
+        <tr id="<%=user._id%>" class="currentUser">
+            <td><%=user.user%></td>
+            <td><%=user.name.first%></td>
+            <td><%=user.name.last%></td>
+            <td><%=user.email%></td>
        </tr>
-    <%})%>
-</table>
-<div id="navigate">
-<br><button id="createUser" class="admin"><span class="createUser-UI">Create User</span></button>
-    <button id="postListBtn">Post list</button>
-<button id="myPage"><span class="myPage-UI">My Page</span></button>
-<p>* to get user click a table row </p>
+        <%})%>
+    </table>
+    <div id="navigate">
+        <br>
+        <button id="createUser" class="admin"><span class="createUser-UI">Create User</span></button>&nbsp;
+        <button id="postListBtn">Post list</button>&nbsp;
+        <button id="myPage"><span class="myPage-UI">My Page</span></button>
+        <p>* to get user click a table row </p>
+    </div>
 </div>
-

@@ -1,23 +1,26 @@
 <div class="form">
-    <div id="<%=_id%>" class="form__field">
-        <label for="user">User:</label>
-        <input id="user" type="text" value="<%=user%>" required><br>
-        <label for="email">Email:</label>
-        <input id="email" type="text" value="<%=email%>" required><br>
-        <label for="password">Password:</label>
-        <input id="password" type="text" value="<%=password%>" required><br>
-        <label for="first">First Name:</label>
-        <input id="first" type="text" value="<%=name.first%>" required><br>
-        <label for="last">Last Name:</label>
-        <input id="last" type="text" value="<%=name.last%>" required><br>
-        <br>
+    <div class="block_first">
+        <img src="images/pic.jpg"><br><br>
         <button id="addPost" class="addPost">Add Post</button>
         <button id="myPost">My Posts</button><br><br>
-        <button id="editBtn" class="edit">Edit User</button>
-        <button id="deleteBtn" class="admin">Delete User</button><br><br>
         <button id="userListBtn">Users list</button>
         <button id="postsListBtn">Posts list</button><br><br>
         <button id="logoutBtn">Log Out</button>
-
+    </div>
+    <div class="block_second">
+    <div id="<%=_id%>" class="form__field">
+        <label for="user">User:</label><br>
+        <input id="user" type="text" value="<%=user%>" required><br>
+        <label for="email">Email:</label><br>
+        <input id="email" type="text" value="<%=email%>" required><br>
+        <label for="password">Password:</label><br>
+        <input id="password" type="text" value="<%=password%>" required><br>
+        <label for="first">First Name:</label><br>
+        <input id="first" type="text" value="<%=name.first%>" required><br>
+        <label for="last">Last Name:</label><br>
+        <input id="last" type="text" value="<%=name.last%>" required><br><br>
+        <button id="editBtn" class="edit">Edit User</button>&nbsp;&nbsp;
+        <button id="deleteBtn" class="admin">Delete User</button>
+        </div>
     </div>
 </div>

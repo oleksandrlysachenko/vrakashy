@@ -150,7 +150,7 @@ define([
         },
 
         any: function(){
-            var View = new MainView();
+            var View = new ViewLogin();
             return View
         },
 

@@ -17,7 +17,7 @@ define([
 
         back: function(){
             Backbone.history.fragment = '';
-            Backbone.history.navigate('#users', {trigger: true});
+            Backbone.history.navigate('#login', {trigger: true});
         },
 
         createUser: function(e){

@@ -8,16 +8,16 @@ define([
 
         events: {
             'click #backToUserBtn' : 'backToUserBtn',
-            'click .currentPost' : 'd'
+            'click .currentMyPost' : 'curMyPos'
         },
 
         initialize: function(optins){
             this.render(optins);
         },
 
-        d: function(e){
+        curMyPos: function(e){
             var targetEl = $(e.target);
-            var tr = targetEl.closest('.currentPost');
+            var tr = targetEl.closest('.currentMyPost');
             var id = tr.attr('id');
             console.log(id);
             var post = new Post({_id :id});
