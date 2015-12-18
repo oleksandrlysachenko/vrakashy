@@ -1,35 +1,24 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-/*var CounterSchema = Schema({
-    _id : {type: Number, required: true},
-    seq : {type: Number, default: 1}
-}, {collection: 'Counter'});*/
-var UserSchema = Schema({
-    //_id : Number,
-    email: {type:String, default: 'example@example.com'},
-    password: String,
-    user: String,
-    name: {
-        first: {type: String, default: 'First'},
-        last: {type: String, default: 'Last'}
-    },
-    dateOfBirth: {},
-    friends: [{type: Number, ref: 'user'}],
-    posts: [{type: String, ref: 'post'}],
-    userStatus: {type: String, default: 'User'}
-}, {collection: 'User', version: false});
+var CONST = require('./constants');
 
-mongoose.schemas = {};
+module.exports = function () {
+    'use strict';
+    var mongoose = require('mongoose');
+    var Schema = mongoose.Schema;
+    var ObjectId = mongoose.Schema.ObjectId;
+    var userSchema = new Schema({
+        email: { type: String, default: 'example@example.com' },
+        password: String,
+        profile: {
+            first: { type: String, default: 'First' },
+            last: { type: String, default: 'Last' },
+            dateOfBirth: { type: Date },
+            email: String
+        },
+        //options: {},
+        //friends: [{type: Number, ref: 'user'}],
+        posts: [{ type: ObjectId, ref: CONST.MODELS.POST, default: null }]
+        //userStatus: {type: String, default: 'User'}
+    }, { collection: CONST.MODELS.USER + 's' });
 
-/*mongoose.schemas.Counter = CounterSchema;
-var Counter = mongoose.model('Counter', CounterSchema);
-UserSchema.pre('save',function(next){
-    var doc = this;
-    Counter.findByIdAndUpdate({_id : 'entityId'},{$inc:{seq:1}}, function(err,counter){
-        if(err) {return next(err)}
-        doc._id = counter.seq;
-
-    });
-    next()
-});*/
-mongoose.schemas.User = UserSchema;
+    mongoose.schemas[CONST.MODELS.USER] = userSchema;
+};

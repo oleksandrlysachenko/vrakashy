@@ -1,13 +1,18 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var PostSchema = Schema({
-    //_id : Number,
-    description: String,
-    tags : [{type: String}],
-    content : String,
-    //author : ObjectId,
-    author : {type: String, ref: 'user'},
-    createDate : {type : Date, default : Date.now}
-}, {collection : 'Post'});
+var CONST = require('./constants');
 
-mongoose.schemas.Post = PostSchema;
+module.exports = function () {
+    'use strict';
+    var mongoose = require('mongoose');
+    var Schema = mongoose.Schema;
+    var ObjectId = mongoose.Schema.ObjectId
+    var postSchema = new Schema({
+        title: String,
+        description: String,
+        tags: [{ type: String }],
+        content: String,
+        author: { type: ObjectId, ref: CONST.MODELS.USER, default: null },
+        createAt: { type: Date, default: Date.now }
+    }, { collection: CONST.MODELS.POST + 's' });
+
+    mongoose.schemas.Post = postSchema;
+};
