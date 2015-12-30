@@ -1,9 +1,10 @@
-var mongoose = require('mongoose');
-var UserSchame = mongoose.schemas.User;
-var PostSchame = mongoose.schemas.Post;
-var _User = mongoose.model('user', UserSchame);
-var _Post = mongoose.model('post', PostSchame);
-var Posts = function(res,req,next) {
+var CONST = require('../constants');
+
+var Posts = function(db) {
+
+    var _User = db.model(CONST.MODELS.USER);
+    var _Post = db.model(CONST.MODELS.POST);
+
     this.auth = function(req,res,next){
         if (req.session._id) {
             next();

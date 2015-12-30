@@ -1,6 +1,6 @@
-var CONST = require('./constants');
+var CONST = require('../constants');
 
-module.exports = function () {
+module.exports = function (db) {
     'use strict';
     var mongoose = require('mongoose');
     var Schema = mongoose.Schema;
@@ -14,5 +14,5 @@ module.exports = function () {
         createAt: { type: Date, default: Date.now }
     }, { collection: CONST.MODELS.POST + 's' });
 
-    mongoose.schemas.Post = postSchema;
+    db.model(CONST.MODELS.POST, postSchema);
 };

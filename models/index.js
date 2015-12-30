@@ -1,9 +1,6 @@
-module.exports = function() {
+module.exports = function(db) {
     'use strict';
 
-    mongoose.schemas = {};
-
-    require('./users');
-    require('./session');
-    require('./posts');
+    require('./users')(db);
+    require('./posts')(db);
 };

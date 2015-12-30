@@ -1,6 +1,6 @@
-var CONST = require('./constants');
+var CONST = require('../constants');
 
-module.exports = function () {
+module.exports = function (db) {
     'use strict';
     var mongoose = require('mongoose');
     var Schema = mongoose.Schema;
@@ -20,5 +20,5 @@ module.exports = function () {
         //userStatus: {type: String, default: 'User'}
     }, { collection: CONST.MODELS.USER + 's' });
 
-    mongoose.schemas[CONST.MODELS.USER] = userSchema;
+    db.model(CONST.MODELS.USER, userSchema);
 };

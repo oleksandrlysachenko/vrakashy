@@ -1,6 +1,6 @@
-module.exports = (function(){
+module.exports = function(){
     var express = require('express');
-    var PostHandler = require('../handlers/posts.js');
+    var PostHandler = require('../handlers/posts');
     var postRouter = express.Router();
     var postHandler = new PostHandler;
 
@@ -10,4 +10,4 @@ module.exports = (function(){
     postRouter.delete('/:postId',postHandler.auth,postHandler.delete);
 
     return postRouter;
-})();
+};

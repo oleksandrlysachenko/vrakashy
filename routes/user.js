@@ -1,7 +1,10 @@
-module.exports = (function(){
+module.exports = function(db){
+
+    var UserHandler = require('../handlers/user')(db);
     var express = require('express');
-    var UserHandler = require('../handlers/user');
     var userRouter = express.Router();
+    var UserHandler = require('../handlers/user')(db);
+
     var userHandler = new UserHandler;
 
     userRouter.get('/demo',userHandler.demo);
@@ -14,4 +17,4 @@ module.exports = (function(){
     userRouter.get('/:id/posts',userHandler.getPosts);
 
     return userRouter;
-})();
+};
