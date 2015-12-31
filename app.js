@@ -1,6 +1,5 @@
 var express = require('express');
 var mongoose = require('mongoose');
-var db = mongoose.connection;
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
@@ -13,6 +12,7 @@ var server = http.createServer(app);
 require('./config/development');
 
 mongoose.connect(process.env.DB_HOST, process.env.DB_NAME, process.env.DB_PORT);
+var db = mongoose.connection;
 
 app.use(cookieParser());
 app.use(express.static(__dirname + '/public'));
@@ -36,14 +36,10 @@ db.once('open', function() {
         })
     }));
 
-    //require('./routes/index')(app, db);
-
-    app.get('/', function (req, res, next) {
-        res.status(200).send('Process ' + process.pid + ' work!');
-    });
+    require('./routes/index')(app, db);
 
     server.listen(process.env.HTTP_PORT, function () {
-        console.log('-> Server start succeed!');
+        console.log('Server start succeed');
         console.log('   | Server host: ' + process.env.HTTP_HOST);
         console.log('   | Server port: ' + process.env.HTTP_PORT);
         console.log('   | Database host: ' + process.env.DB_HOST);

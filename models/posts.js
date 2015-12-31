@@ -14,5 +14,5 @@ module.exports = function (db) {
         createAt: { type: Date, default: Date.now }
     }, { collection: CONST.MODELS.POST + 's' });
 
-    db.model(CONST.MODELS.POST, postSchema);
+    mongoose.schemas.Post = postSchema;
 };

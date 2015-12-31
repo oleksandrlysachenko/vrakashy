@@ -1,13 +1,12 @@
+var express = require('express');
+var userRouter = express.Router();
+var UserHandler = require('../handlers/user');
+
 module.exports = function(db){
+    'use strict';
 
-    var UserHandler = require('../handlers/user')(db);
-    var express = require('express');
-    var userRouter = express.Router();
-    var UserHandler = require('../handlers/user')(db);
+    var userHandler = new UserHandler(db);
 
-    var userHandler = new UserHandler;
-
-    userRouter.get('/demo',userHandler.demo);
     userRouter.post('/',userHandler.create);
     userRouter.get('/all',userHandler.getAll);
     userRouter.get('/:id',userHandler.auth,userHandler.view);

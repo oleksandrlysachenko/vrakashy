@@ -3,17 +3,17 @@ var numCPUs = require('os').cpus().length;
 
 if (cluster.isMaster) {
 
-    console.log('Master cluster settings up ' + numCPUs + 'CPUs');
+    console.log('Master cluster settings up ' + numCPUs + ' CPUs');
 
     // TODO uncomment for set up ONE worker!
-    //cluster.fork();
+    cluster.fork();
 
-    // TODO uncomment for set up MORE worker!
-    for (var i = 0; i < numCPUs; i++) {
+    // TODO uncomment for set up MORE workers!
+    /*for (var i = 0; i < numCPUs; i++) {
         setTimeout(function() {
             cluster.fork()
         }, 1000);
-    }
+    }*/
 
     cluster.on('online', function (worker) {
         console.log('Worker ' + worker.process.pid + ' is online')

@@ -1,44 +1,25 @@
-module.exports = function(app, db){
+var model = require('../models/index');
+var RegistrationHandler = require('../handlers/registration');
+var userRouter = require('./user');
+var postRouter = require('./posts');
+
+module.exports = function(app){
     'use strict';
 
-    var model = require('../models/index')(db);
-    var userRouter = require('./user');
-    var postRouter = require('./posts');
+    var registration = new RegistrationHandler();
 
     app.get('/', function (req, res, next) {
+        res.status(200).send('Express start success');
+    });
 
-        var arr = [
-            1,2,3,4,5,6,7,8,9,10,
-            1,2,3,4,5,6,7,8,9,10,
-            1,2,3,4,5,6,7,8,9,10,
-            1,2,3,4,5,6,7,8,9,10,
-            1,2,3,4,5,6,7,8,9,10,
-            1,2,3,4,5,6,7,8,9,10,
-            1,2,3,4,5,6,7,8,9,10,
-            1,2,3,4,5,6,7,8,9,10,
-            1,2,3,4,5,6,7,8,9,10,
-            1,2,3,4,5,6,7,8,9,10,
-            1,2,3,4,5,6,7,8,9,10,
-            1,2,3,4,5,6,7,8,9,10,
-            1,2,3,4,5,6,7,8,9,10,
-            1,2,3,4,5,6,7,8,9,10
-        ];
-        console.time("time1");
-        var newArr = [],
-            arrLength = arr.length;
-        for (var i=0; i<arrLength; i++) {
-            newArr.push(arr[i]);
-        }
-        console.timeEnd("time1");
-
-     res.status(200).send('success');
-     });
-
+    app.post('/signUp', registration.signUp);
+    app.post('/signIn', registration.signIn);
     app.use('/user',userRouter);
     app.use('/post',postRouter);
 
     app.use(function (err, req, res, next) {
         var status = err.status || 500;
+        console.error(err.message);
         res.status(status).send(err);
     })
 };

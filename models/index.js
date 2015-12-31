@@ -1,6 +1,10 @@
-module.exports = function(db) {
+var Models = function() {
     'use strict';
 
-    require('./users')(db);
-    require('./posts')(db);
+    var mongoose = require('mongoose');
+    mongoose.schemas = {};
+
+    require('./users')();
+    require('./posts')();
 };
+module.exports = Models();
