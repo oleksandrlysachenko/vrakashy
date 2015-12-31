@@ -36,7 +36,7 @@ var Registration = function () {
                 }
 
                 console.timeEnd('time');
-                res.status(200).send(RESPONSE.ON_ACTION.SUCCESS);
+                res.status(200).send({success: RESPONSE.ON_ACTION.SUCCESS});
             });
     };
 
