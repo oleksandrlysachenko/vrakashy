@@ -34,10 +34,29 @@ describe('User Sign Up | Sing In | Sign Out', function () {
     it('User Sign Up', function (done) {
 
         var userData = USERS.TEMP_USER;
-        userData.login = 'temp2';
 
         agent
             .post('/signUp')
+            .send(userData)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err)
+                }
+
+                expect(res.body).to.have.property('success');
+                expect(res.body.success).to.equal('Success');
+
+                done();
+            });
+    });
+
+    it('User Sign In', function (done) {
+
+        var userData = USERS.TEMP_USER;
+
+        agent
+            .post('/signIn')
             .send(userData)
             .expect(200)
             .end(function (err, res) {

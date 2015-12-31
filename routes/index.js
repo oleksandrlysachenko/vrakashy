@@ -14,6 +14,8 @@ module.exports = function(app){
 
     app.post('/signUp', registration.signUp);
     app.post('/signIn', registration.signIn);
+    app.post('/signOut', registration.signOut);
+
     app.use('/user',userRouter);
     app.use('/post',postRouter);
 

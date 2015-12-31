@@ -13,8 +13,8 @@ var Registration = function () {
         var body = req.body;
         var data;
 
-        if (!body) {
-            res.status(400).send(RESPONSE.NOT_ENOUGH_PARAMS);
+        if (!body || !body.login || !body.pass) {
+            res.status(400).send({error: RESPONSE.NOT_ENOUGH_PARAMS});
         }
 
         data = {
@@ -41,7 +41,29 @@ var Registration = function () {
     };
 
     this.signIn = function (req, res, next) {
-        res.status(200).send('Sign In')
-    }
+
+        console.time('time2');
+
+        var body = req.body;
+
+        if (!body || !body.login || !body.pass) {
+            res.status(400).send({error: RESPONSE.NOT_ENOUGH_PARAMS});
+        }
+
+        User
+            .findOne({login: body.login, password: body.pass}, function (err, model) {
+                if (err) {
+                    return next(err);
+                }
+
+                console.timeEnd('time2');
+
+                res.status(200).send({success: RESPONSE.ON_ACTION.SUCCESS});
+            });
+    };
+
+    this.signOut = function (req, res, next) {
+
+    };
 };
 module.exports = Registration;
