@@ -5,7 +5,7 @@ var expect = require('chai').expect;
 var CONST = require('../../constants/index');
 var USERS = require('../testHelpers/usersTemplate');
 var async = require ('async');
-var PreparingDB = require('./preparingDB');
+var PreparingDB = require('./preparingDatabase');
 
 var app = require('../../app');
 
