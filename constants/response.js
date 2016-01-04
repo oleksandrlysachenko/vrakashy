@@ -4,5 +4,10 @@ module.exports = {
 
     ON_ACTION: {
         SUCCESS: 'Success'
+    },
+
+    ON_AUTH: {
+        LOG_IN: 'Login successful',
+        LOG_OUT: 'Logout successful'
     }
 };

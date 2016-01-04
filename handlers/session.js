@@ -1,42 +1,31 @@
+var CONST = require('../constants');
+var RESPONSE = require('../constants/response');
 var mongoose = require('mongoose');
-var UserSchame = mongoose.schemas.User;
-var SessionSchame = mongoose.schemas.Session;
-var _User = mongoose.model('user', UserSchame);
-var _Session = mongoose.model('session', SessionSchame);
-var Session = function(res,req,next){
+var UserSchema = mongoose.schemas.User;
+var User = mongoose.model(CONST.MODELS.USER, UserSchema);
 
-    this.get = function (req, res, next) {
-        var cookie = req.cookies;
-        var user = req.query.user;
-        var password = req.query.password;
-        _User.findOne({user:user,password:password}, function(err,result){
-            //console.log(result);
-            if (err) { return next(err) }
-            var user = result || undefined;
-            //console.log(user);
-            if (user) {
-                req.session._id = cookie.sessionID.substr(2,32);
-                req.session.user = user.user;
-                req.session.userID = user._id;
-                req.session.auth = true;
-              //  console.log('true');
-              //  console.log(result);
-                res.send(user)
-            }
-            else {
-             //   console.log('false');
-                res.send(user)
-            }
-        })
+var Session = function(){
+
+    this.register = function (req, res, userId) {
+        req.session.loggedIn = true;
+        req.session.uId = userId;
+
+        console.timeEnd('time');
+
+        res.status(200).send({success: RESPONSE.ON_AUTH.LOG_IN})
     };
 
-    this.del = function(req,res,next){
-        _Session.find(function(err,result){
-            if (err) { return next(err) }
+    this.destroy = function (req, res) {
+
+        if (req.session) {
             req.session.destroy();
-            res.send(result);
-        });
-    }
+        }
+
+        console.timeEnd('time');
+
+        res.status(200).send({success: RESPONSE.ON_AUTH.LOG_OUT});
+    };
+
 };
 
 module.exports = Session;

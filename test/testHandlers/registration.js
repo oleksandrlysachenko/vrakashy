@@ -45,7 +45,7 @@ describe('User Sign Up | Sing In | Sign Out', function () {
                 }
 
                 expect(res.body).to.have.property('success');
-                expect(res.body.success).to.equal('Success');
+                expect(res.body.success).to.equal('Login successful');
 
                 done();
             });
@@ -61,14 +61,35 @@ describe('User Sign Up | Sing In | Sign Out', function () {
             .expect(200)
             .end(function (err, res) {
                 if (err) {
-                    return done(err)
+                    return done(err);
                 }
 
                 expect(res.body).to.have.property('success');
-                expect(res.body.success).to.equal('Success');
+                expect(res.body.success).to.equal('Login successful');
 
                 done();
             });
+    });
+
+    it('User Sign Out', function (done) {
+
+        var userData = USERS.TEMP_USER;
+
+        agent
+            .post('/signOut')
+            .send(userData)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                }
+
+                expect(res.body).to.have.property('success');
+                expect(res.body.success).to.equal('Logout successful');
+
+                done();
+            });
+
     });
 
 });
