@@ -14,23 +14,12 @@ var Registration = function () {
         console.time('time');
 
         var body = req.body;
-        var data;
 
-        if (!body || !body.login || !body.pass) {
-            res.status(400).send({error: RESPONSE.NOT_ENOUGH_PARAMS});
+        if (!body || !body.login || !body.password) {
+            return res.status(400).send({error: RESPONSE.NOT_ENOUGH_PARAMS});
         }
 
-        data = {
-            login: body.login,
-            password: body.pass,
-            profile: {
-                first: body.first,
-                last: body.last,
-                email: body.email
-            }
-        };
-
-        var newUser = new User(data);
+        var newUser = new User(body);
 
         newUser
             .save(function (err, model) {
@@ -48,14 +37,18 @@ var Registration = function () {
 
         var body = req.body;
 
-        if (!body || !body.login || !body.pass) {
-            res.status(400).send({error: RESPONSE.NOT_ENOUGH_PARAMS});
+        if (!body || !body.login || !body.password) {
+            return res.status(400).send({error: RESPONSE.NOT_ENOUGH_PARAMS});
         }
 
         User
-            .findOne({login: body.login, password: body.pass}, function (err, model) {
+            .findOne({login: body.login, password: body.password}, function (err, model) {
                 if (err) {
                     return next(err);
+                }
+
+                if (!model) {
+                   return res.status(401).send({error: RESPONSE.WRONG_LOGIN_DATA});
                 }
 
                 return session.register(req, res, model._id.toString());
@@ -68,12 +61,19 @@ var Registration = function () {
 
         var body = req.body;
 
-        if (!body || !body.login || !body.pass) {
-            res.status(400).send({error: RESPONSE.NOT_ENOUGH_PARAMS});
+        if (!body || !body.login || !body.password) {
+            return res.status(400).send({error: RESPONSE.NOT_ENOUGH_PARAMS});
         }
 
         User
-            .findOne({login: body.login, password: body.pass}, function (err, model) {
+            .findOne({login: body.login, password: body.password}, function (err, model) {
+                if (err) {
+                    return next(err);
+                }
+
+                if (!model) {
+                    return res.status(401).send({error: RESPONSE.WRONG_LOGIN_DATA});
+                }
 
                 return session.destroy(req, res);
             });

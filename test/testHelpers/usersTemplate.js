@@ -2,9 +2,11 @@ module.exports = {
 
     TEMP_USER: {
         login: 'temp',
-        pass: '12345',
-        first: 'First',
-        last: 'Last',
-        email: 'example@gmail.com'
+        password: '12345',
+        profile: {
+            first: 'First',
+            last: 'Last',
+            email: 'example@gmail.com'
+        }
     }
 };

@@ -1,141 +1,24 @@
 var CONST = require('../constants');
+var RESPONSE = require('../constants/response');
+var mongoose = require('mongoose');
+var UserSchema = mongoose.schemas.User;
+var User = mongoose.model(CONST.MODELS.USER, UserSchema);
 
-var User = function(db){
+var UserHandler = function(){
 
-    var _User = db.model(CONST.MODELS.USER);
-    var _Post = db.model(CONST.MODELS.POST);
+    this.getBySession = function (req, res, next) {
+        var uId = req.session.uId;
 
-    this.create = function (req, res, next) {
-        var body = req.body;
-        var cookie = req.cookies;
-        var user = body.user;
-        var email = body.email;
-        var password = body.password;
-        var firstName = body.firstName;
-        var lastName = body.lastName;
-        var userStatus = body.userStatus;
-        var data = {
-            user : user,
-            password : password,
-            email : email || undefined,
-            name : {
-                first : firstName || undefined,
-                last : lastName || undefined
-            },
-            userStatus : userStatus || 'User'
-        };
-        var user = new _User(data);
-        user.save(function (err, response) {
-            if (err) {return next(err); }
-            req.session._id = cookie.sessionID;
-            req.session.user = response.user;
-            req.session.userID = response._id;
-            req.session.auth = true;
-            res.send(response);
-        });
-    };
-    this.auth = function(req,res,next){
-        if (req.session._id) {
-            next();
-        }
-        else {
-            res.status(401).send();
-        }
-    };
-
-    this.view = function(req, res, next){
-        var id = req.params.id;
-        _User.findById(id,function(err, response){
-            if (err){ return next(err);}
-            res.status(200).send(response)
-        });
-    };
-    this.authUser = function(req,res,next){
-        var id = req.session.userID;
-        _User.findById(id, function(err, response){
-            if (err) { return next(err) }
-            res.status(200).send(response)
-        });
-    };
-    this.delete = function(req,res,next){
-        var id = req.params.id;
-        _User.findByIdAndRemove(id, function(err, response){
-            if (err){ return next(err); }
-            _Post.find({author: id})
-                .remove()
-                .exec(function(err,respo){
-                if (err){ return next(err); }
-            });
-            res.status(200).send(response);
-        });
-    };
-    this.update = function(req,res,next){
-        var body = req.body;
-        var id = body._id;
-        var user = body.user;
-        var email = body.email;
-        var password = body.password;
-        var firstName = body.firstName;
-        var lastName = body.lastName;
-        var data = {
-            user : user,
-            password : password,
-            email : email || undefined,
-            name : {
-                first : firstName || undefined,
-                last : lastName || undefined
+        User.findById(uId, function (err, model) {
+            if (err) {
+                return next(err);
             }
-        };
-        _User.update({_id: id}, {$set : data}, function(err,user){
-            if (err){ return next(err);}
-            res.status(200).send(user);
+
+            return res.status(200).send(model);
         });
-    };
-    this.getAll = function(req,res,next){
-            _User
-                .find()
-                .populate('posts')
-                .populate('friends')
-                //.lean()
-                .exec(function (err, response) {
-                    if (err) {
-                        return next(err);
-                    }
-                    res.status(200).send(response);
-                });
 
     };
-    this.getPosts = function(req,res,next){
-        var id = req.params.id;
-        _User
-            .findById(id)
-            .populate('posts')
-            .exec(function(err, response){
-                if (err) {return next(err)}
-                res.status(200).send(response.posts)
-            });
-    };
-    this.demo = function(req,res,next){
-        var admin = {
-            user : 'admin',
-            password : 'admin',
-            userStatus: 'Admin'
-        };
-        var user = {
-            user : 'user',
-            password : 'user',
-            userStatus: 'User'
-        };
-        var Admin = new _User(admin);
-        var User = new _User(user);
-        Admin.save(admin,function(err,response){
-            if (err) {return next(err)}
-            User.save(user,function(err,response){
-                if (err) {return next(err)}
-                res.status(200).send(response);
-            })
-        })
-    }
+
 };
 
-module.exports = User;
+module.exports = UserHandler;

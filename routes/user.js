@@ -1,19 +1,16 @@
 var express = require('express');
-var userRouter = express.Router();
+var router = express.Router();
 var UserHandler = require('../handlers/user');
+var SessionHandler = require('../handlers/session');
 
-module.exports = function(db){
+var UserRouter = function(){
     'use strict';
 
-    var userHandler = new UserHandler(db);
+    var user = new UserHandler();
+    var session = new SessionHandler();
 
-    userRouter.post('/',userHandler.create);
-    userRouter.get('/all',userHandler.getAll);
-    userRouter.get('/:id',userHandler.auth,userHandler.view);
-    userRouter.get('/',userHandler.auth,userHandler.authUser);
-    userRouter.delete('/:id',userHandler.auth,userHandler.delete);
-    userRouter.put('/:id',userHandler.update);
-    userRouter.get('/:id/posts',userHandler.getPosts);
+    router.get('/', session.isAuthenticatedUser, user.getBySession);
 
-    return userRouter;
+    return router;
 };
+module.exports = UserRouter();

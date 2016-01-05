@@ -1,10 +1,10 @@
 var CONST = require('../constants');
 
-module.exports = function (db) {
+module.exports = function () {
     'use strict';
     var mongoose = require('mongoose');
     var Schema = mongoose.Schema;
-    var ObjectId = mongoose.Schema.ObjectId
+    var ObjectId = mongoose.Schema.ObjectId;
     var postSchema = new Schema({
         title: String,
         description: String,

@@ -12,20 +12,32 @@ var Session = function(){
 
         console.timeEnd('time');
 
-        res.status(200).send({success: RESPONSE.ON_AUTH.LOG_IN})
+        return res.status(200).send({success: RESPONSE.ON_AUTH.LOG_IN})
     };
 
     this.destroy = function (req, res) {
-
         if (req.session) {
             req.session.destroy();
         }
 
         console.timeEnd('time');
 
-        res.status(200).send({success: RESPONSE.ON_AUTH.LOG_OUT});
+        return res.status(200).send({success: RESPONSE.ON_AUTH.LOG_OUT});
     };
 
-};
+    this.isAuthenticatedUser = function (req, res, next) {
 
+        var err;
+
+        if (req.session && req.session.uId && req.session.loggedIn) {
+            return next();
+
+        } else {
+            err = new Error(RESPONSE.ON_AUTH.UN_AUTHORIZED);
+            err.status = 401;
+            return next(err);
+        }
+
+    };
+};
 module.exports = Session;

@@ -13,6 +13,7 @@ describe('User Sign Up | Sing In | Sign Out', function () {
     this.timeout(10000);
 
     var agent = request.agent(app);
+    var userData = USERS.TEMP_USER;
 
     before(function (done) {
         this.timeout(40000);
@@ -33,8 +34,6 @@ describe('User Sign Up | Sing In | Sign Out', function () {
 
     it('User Sign Up', function (done) {
 
-        var userData = USERS.TEMP_USER;
-
         agent
             .post('/signUp')
             .send(userData)
@@ -53,8 +52,6 @@ describe('User Sign Up | Sing In | Sign Out', function () {
 
     it('User Sign In', function (done) {
 
-        var userData = USERS.TEMP_USER;
-
         agent
             .post('/signIn')
             .send(userData)
@@ -72,8 +69,6 @@ describe('User Sign Up | Sing In | Sign Out', function () {
     });
 
     it('User Sign Out', function (done) {
-
-        var userData = USERS.TEMP_USER;
 
         agent
             .post('/signOut')
