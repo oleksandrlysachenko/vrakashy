@@ -13,7 +13,7 @@ describe('User functionality', function () {
     this.timeout(10000);
 
     var agent = request.agent(app);
-    var loginData = USERS.TEMP_USER;
+    var loginData = USERS.TEMP_LOGIN_USER;
 
     before(function (done) {
         this.timeout(40000);
@@ -55,7 +55,6 @@ describe('User functionality', function () {
                             return done(err);
                         }
 
-                        console.log(res.body);
                         expect(res.body).to.have.property('_id');
                         expect(res.body).to.have.property('profile');
 

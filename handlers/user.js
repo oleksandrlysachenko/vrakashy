@@ -19,6 +19,19 @@ var UserHandler = function(){
 
     };
 
+    this.saveSettings = function (req, res, next) {
+        var uId = req.session.uId;
+        var body = req.body;
+
+        User.findByIdAndUpdate(uId, {$set: body}, function (err, model) {
+            if (err) {
+                return next(err);
+            }
+
+            return res.status(200).send({success: RESPONSE.ON_ACTION.SAVE_CHANGE})
+        });
+    };
+
 };
 
 module.exports = UserHandler;

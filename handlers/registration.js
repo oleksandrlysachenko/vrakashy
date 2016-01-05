@@ -15,8 +15,12 @@ var Registration = function () {
 
         var body = req.body;
 
-        if (!body || !body.login || !body.password) {
+        if (!body || !body.login || !body.password || !body.confirmPassword || !body.profile.email) {
             return res.status(400).send({error: RESPONSE.NOT_ENOUGH_PARAMS});
+        }
+
+        if (body.password !== body.confirmPassword) {
+            return res.status(400).send({error: RESPONSE.PASSWORD_NOT_CONFIRM});
         }
 
         var newUser = new User(body);
@@ -37,8 +41,12 @@ var Registration = function () {
 
         var body = req.body;
 
-        if (!body || !body.login || !body.password) {
+        if (!body || !body.login || !body.password || !body.confirmPassword) {
             return res.status(400).send({error: RESPONSE.NOT_ENOUGH_PARAMS});
+        }
+
+        if (body.password !== body.confirmPassword) {
+            return res.status(400).send({error: RESPONSE.PASSWORD_NOT_CONFIRM});
         }
 
         User
@@ -59,20 +67,16 @@ var Registration = function () {
 
         console.time('time');
 
-        var body = req.body;
-
-        if (!body || !body.login || !body.password) {
-            return res.status(400).send({error: RESPONSE.NOT_ENOUGH_PARAMS});
-        }
+        var uId = req.session.uId;
 
         User
-            .findOne({login: body.login, password: body.password}, function (err, model) {
+            .findById(uId, function (err, model) {
                 if (err) {
                     return next(err);
                 }
 
                 if (!model) {
-                    return res.status(401).send({error: RESPONSE.WRONG_LOGIN_DATA});
+                    return res.status(401).send({error: RESPONSE.USER_NOT_FIND});
                 }
 
                 return session.destroy(req, res);

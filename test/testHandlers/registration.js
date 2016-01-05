@@ -14,6 +14,7 @@ describe('User Sign Up | Sing In | Sign Out', function () {
 
     var agent = request.agent(app);
     var userData = USERS.TEMP_USER;
+    var userLogin = USERS.TEMP_LOGIN_USER;
 
     before(function (done) {
         this.timeout(40000);
@@ -50,11 +51,31 @@ describe('User Sign Up | Sing In | Sign Out', function () {
             });
     });
 
+    it('User Sign Up with WRONG data', function (done) {
+
+        userData.confirmPassword = '54321';
+
+        agent
+            .post('/signUp')
+            .send(userData)
+            .expect(400)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err)
+                }
+
+                expect(res.body).to.have.property('error');
+                expect(res.body.error).to.equal('Password is not confirm.');
+
+                done();
+            });
+    });
+
     it('User Sign In', function (done) {
 
         agent
             .post('/signIn')
-            .send(userData)
+            .send(userLogin)
             .expect(200)
             .end(function (err, res) {
                 if (err) {
@@ -68,11 +89,31 @@ describe('User Sign Up | Sing In | Sign Out', function () {
             });
     });
 
+    it('User Sign In with WRONG data', function (done) {
+
+        userLogin.confirmPassword = '54321';
+
+        agent
+            .post('/signIn')
+            .send(userLogin)
+            .expect(400)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                }
+
+                expect(res.body).to.have.property('error');
+                expect(res.body.error).to.equal('Password is not confirm.');
+
+                done();
+            });
+    });
+
     it('User Sign Out', function (done) {
 
         agent
             .post('/signOut')
-            .send(userData)
+            .send(userLogin)
             .expect(200)
             .end(function (err, res) {
                 if (err) {

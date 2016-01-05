@@ -10,6 +10,7 @@ var UserRouter = function(){
     var session = new SessionHandler();
 
     router.get('/', session.isAuthenticatedUser, user.getBySession);
+    router.post('/settings',session.isAuthenticatedUser, user.saveSettings);
 
     return router;
 };

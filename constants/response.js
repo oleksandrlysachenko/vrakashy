@@ -2,10 +2,15 @@ module.exports = {
 
     NOT_ENOUGH_PARAMS: 'Not enough incoming parameters.',
 
-    WRONG_LOGIN_DATA: 'Wrong login or password.',
+    PASSWORD_NOT_CONFIRM: 'Password is not confirm.',
+
+    WRONG_LOGIN_DATA: 'Not find. Wrong login or password.',
+
+    USER_NOT_FIND: 'User not find',
 
     ON_ACTION: {
-        SUCCESS: 'Success'
+        SUCCESS: 'Success',
+        SAVE_CHANGE: 'Save change'
     },
 
     ON_AUTH: {
