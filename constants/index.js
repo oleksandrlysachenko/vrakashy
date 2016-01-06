@@ -1,6 +1,7 @@
 module.exports = {
     MODELS : {
         USER: 'User',
-        POST: 'Post'
+        POST: 'Post',
+        SESSION: 'Session'
     }
 };

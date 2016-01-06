@@ -1,7 +1,7 @@
 module.exports = {
 
     TEMP_USER: {
-        login: 'temp',
+        login: 'temp0',
         password: '12345',
         confirmPassword: '12345',
         profile: {
@@ -12,7 +12,7 @@ module.exports = {
     },
 
     TEMP_LOGIN_USER: {
-        login: 'temp',
+        login: 'temp0',
         password: '12345',
         confirmPassword: '12345'
     }

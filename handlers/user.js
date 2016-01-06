@@ -19,17 +19,76 @@ var UserHandler = function(){
 
     };
 
-    this.saveSettings = function (req, res, next) {
+    this.setSettings = function (req, res, next) {
         var uId = req.session.uId;
         var body = req.body;
+        var data = {
+            profile: {
+                first: body.profile.first,
+                last: body.profile.last,
+                email: body.profile.email
+            }
+        };
 
-        User.findByIdAndUpdate(uId, {$set: body}, function (err, model) {
+        User.findByIdAndUpdate(uId, {$set: data}, function (err, model) {
             if (err) {
                 return next(err);
             }
 
-            return res.status(200).send({success: RESPONSE.ON_ACTION.SAVE_CHANGE})
+            return res.status(200).send({success: RESPONSE.ON_ACTION.UPDATE});
         });
+    };
+
+    this.addToFriends = function (req, res, next) {
+        var uId = req.session.uId;
+        var friendId = req.query.id;
+
+        User.findByIdAndUpdate(uId, {$push: {friends: friendId}}, function (err, model) {
+            if (err) {
+                return next(err);
+            }
+
+            return res.status(200).send({success: RESPONSE.ON_ACTION.UPDATE});
+        });
+    };
+
+    this.getListOfUsers = function (req, res, next) {
+        User.find(function (err, collection) {
+            if (err) {
+                return next(err);
+            }
+
+            return res.status(200).send(collection);
+        });
+    };
+
+    this.getById = function (req, res, next) {
+        var id = req.params.id;
+
+        User.findById(id, function (err, model) {
+            if (err) {
+                return next(err);
+            }
+
+            return res.status(200).send(model);
+        });
+    };
+
+    this.getListOfFriends = function (req, res, next) {
+        var uId = req.session.uId;
+
+        User
+            .findOne({_id: uId})
+            .populate({path: 'friends', select: '_id login posts friends profile'})
+            .select('friends')
+            .exec(function (err, collection) {
+                if (err) {
+                    return next();
+                }
+
+                return res.status(200).send(collection);
+            });
+
     };
 
 };

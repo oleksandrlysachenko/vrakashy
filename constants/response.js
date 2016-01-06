@@ -10,7 +10,7 @@ module.exports = {
 
     ON_ACTION: {
         SUCCESS: 'Success',
-        SAVE_CHANGE: 'Save change'
+        UPDATE: 'Update'
     },
 
     ON_AUTH: {

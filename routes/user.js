@@ -10,7 +10,12 @@ var UserRouter = function(){
     var session = new SessionHandler();
 
     router.get('/', session.isAuthenticatedUser, user.getBySession);
-    router.post('/settings',session.isAuthenticatedUser, user.saveSettings);
+    router.put('/settings',session.isAuthenticatedUser, user.setSettings);
+    router.get('/search', session.isAuthenticatedUser,  user.getListOfUsers);
+    router.route('/friends')
+        .get(session.isAuthenticatedUser, user.getListOfFriends)
+        .put(session.isAuthenticatedUser, user.addToFriends);
+    router.get('/:id', session.isAuthenticatedUser, user.getById);
 
     return router;
 };

@@ -7,4 +7,5 @@ var Models = function() {
     require('./users')();
     require('./posts')();
 };
+
 module.exports = Models();

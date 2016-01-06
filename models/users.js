@@ -15,7 +15,7 @@ module.exports = function () {
             email: { type: String, default: null }
         },
         //options: {},
-        //friends: [{type: Number, ref: 'user'}],
+        friends: [{ type: ObjectId, ref: CONST.MODELS.USER, default: null }],
         posts: [{ type: ObjectId, ref: CONST.MODELS.POST, default: null }]
         //userStatus: {type: String, default: 'User'}
     }, { collection: CONST.MODELS.USER + 's' });

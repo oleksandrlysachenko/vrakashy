@@ -17,22 +17,28 @@ PreparingDB = function (){
                         return callback (err);
                     }
 
+                    console.log('Drop collection ' + collection);
+
                     callback();
                 });
             });
         };
     };
 
-    this.createUserByTemplate = function () {
+    this.createUserByTemplate = function (count) {
         return function (callback) {
-            var user = new User(USERS.TEMP_USER);
-            user.save(function (err, model) {
-                if (err) {
-                    return callback(err);
-                }
 
-                callback();
-            });
+            for (var i = 0; count > i; i++) {
+                USERS.TEMP_USER.login = 'temp' + i;
+                var user = new User(USERS.TEMP_USER);
+                user.save(function (err, model) {
+                    if (err) {
+                        return callback(err);
+                    }
+                });
+            }
+
+            callback();
         };
     };
 

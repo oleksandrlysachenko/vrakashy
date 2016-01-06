@@ -1,6 +1,6 @@
 'use strict';
 var app = require('../app');
 
-require('./testHandlers/registration');
+//require('./testHandlers/registration');
 
-//require('./testHandlers/user');
+require('./testHandlers/user');
