@@ -1,6 +1,7 @@
 var model = require('../models/index');
 var RegistrationHandler = require('../handlers/registration');
 var SessionHandler = require('../handlers/session');
+var mailRouter = require('./mail');
 var userRouter = require('./user');
 var postRouter = require('./posts');
 
@@ -18,8 +19,10 @@ module.exports = function(app){
     app.post('/signIn', registration.signIn);
     app.post('/signOut', session.isAuthenticatedUser, registration.signOut);
 
-    app.use('/user',userRouter);
-    app.use('/post',postRouter);
+    app.use('/mail', mailRouter);
+
+    app.use('/user', userRouter);
+    app.use('/post', postRouter);
 
     app.use(function (err, req, res, next) {
         var status = err.status || 500;

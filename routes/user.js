@@ -15,6 +15,7 @@ var UserRouter = function(){
     router.route('/friends')
         .get(session.isAuthenticatedUser, user.getListOfFriends)
         .put(session.isAuthenticatedUser, user.addToFriends);
+    router.post('/')
     router.get('/:id', session.isAuthenticatedUser, user.getById);
 
     return router;

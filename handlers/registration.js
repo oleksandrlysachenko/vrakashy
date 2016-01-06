@@ -6,6 +6,7 @@ var User = mongoose.model(CONST.MODELS.USER, UserSchema);
 var SessionHandler = require('./session');
 
 var Registration = function () {
+    'use strict';
 
     var session = new SessionHandler();
 

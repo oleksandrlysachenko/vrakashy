@@ -5,6 +5,7 @@ var UserSchema = mongoose.schemas.User;
 var User = mongoose.model(CONST.MODELS.USER, UserSchema);
 
 var UserHandler = function(){
+    'use strict';
 
     this.getBySession = function (req, res, next) {
         var uId = req.session.uId;

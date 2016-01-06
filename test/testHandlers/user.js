@@ -19,7 +19,7 @@ describe('User functionality', function () {
     var addToFriendsId;
 
     before(function (done) {
-        this.timeout(4000);
+        this.timeout(40000);
         console.log('>>> before');
 
         var preparingDB = new PreparingDB();

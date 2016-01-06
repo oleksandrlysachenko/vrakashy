@@ -5,6 +5,7 @@ var UserSchema = mongoose.schemas.User;
 var User = mongoose.model(CONST.MODELS.USER, UserSchema);
 
 var Session = function(){
+    'use strict';
 
     this.register = function (req, res, userId) {
         req.session.loggedIn = true;
