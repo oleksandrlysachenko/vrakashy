@@ -9,16 +9,18 @@ var PreparingDB = require('./preparingDatabase');
 
 var app = require('../../app');
 
-describe('User functionality', function () {
+describe('Mailer functionality', function () {
     this.timeout(10000);
 
     var agent = request.agent(app);
     var loginData = USERS.TEMP_LOGIN_USER;
     // custom user login data with receive new pass by forgotPassword
     var customLoginData = USERS.CUSTOM_LOGIN_USER;
+    // TODO enter email for invite
     var receiverEmail = {
         email: 'death.moroz.dma@gmail.com'
     };
+    // TODO enter email to confirm register email and send a new generate password
     var confirmEmail = {
         email: 'death.moroz.dma@gmail.com'
     };

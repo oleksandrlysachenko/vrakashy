@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var UserSchema = mongoose.schemas.User;
 var User = mongoose.model(CONST.MODELS.USER, UserSchema);
 var MailerHelper = require('../helpers/mailer');
+var RandomPassHelper = require('../helpers/randomPass');
 
 var MailHandler = function(){
     'use strict';
@@ -43,7 +44,8 @@ var MailHandler = function(){
                 return res.status(400).send({error: RESPONSE.BAD_REQUEST});
             }
 
-            //TODO put password generator
+            //TODO comment to make a test
+            //generatePass = RandomPassHelper().generate('alphabetical', 8);
             generatePass = 'newPass';
 
             User.findByIdAndUpdate(model._id, {$set: {password: generatePass}} ,function (err, updateModel) {

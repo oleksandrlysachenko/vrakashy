@@ -42,8 +42,6 @@ var Registration = function () {
 
         var body = req.body;
 
-        console.log(body);
-
         if (!body || !body.login || !body.password || !body.confirmPassword) {
             return res.status(400).send({error: RESPONSE.NOT_ENOUGH_PARAMS});
         }

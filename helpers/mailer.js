@@ -40,8 +40,6 @@ var Mailer = function () {
                 return callback(error);
             }
 
-            console.log(info);
-
             return callback();
         });
     }
