@@ -8,6 +8,8 @@ module.exports = {
 
     USER_NOT_FIND: 'User not find',
 
+    BAD_REQUEST: 'Bad request',
+
     ON_ACTION: {
         SUCCESS: 'Success',
         UPDATE: 'Update'

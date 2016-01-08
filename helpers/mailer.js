@@ -12,13 +12,13 @@ var Mailer = function () {
         }
     }));
 
-    this.sendMail = function (receiveEmail, senderEmail, callback) {
+    this.sendInvite = function (receiveEmail, senderEmail, callback) {
 
         mailer.sendMail({
             from: senderEmail,
             to: receiveEmail,
-            subject: 'Test',
-            text: 'Hello'
+            subject: 'Invite',
+            text: 'Invite for you.'
         }, function (error, info) {
             if (error) {
                 return callback(error);
@@ -27,6 +27,24 @@ var Mailer = function () {
             return callback();
         });
     };
+
+    this.sendForget = function (receiveEmail, generatePass, callback) {
+
+        mailer.sendMail({
+            from: 'vrakashy@gmail.com',
+            to: receiveEmail,
+            subject: 'Forgot password',
+            text: 'We generate a new password for you.' + generatePass
+        }, function (error, info) {
+            if (error) {
+                return callback(error);
+            }
+
+            console.log(info);
+
+            return callback();
+        });
+    }
 };
 
  module.exports = Mailer;

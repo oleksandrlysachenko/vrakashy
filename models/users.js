@@ -12,7 +12,7 @@ module.exports = function () {
             first: { type: String, default: 'First' },
             last: { type: String, default: 'Last' },
             dateOfBirth: { type: Date, default: null },
-            email: { type: String, default: null }
+            email: { type: String, unique: true, default: null }
         },
         //options: {},
         friends: [{ type: ObjectId, ref: CONST.MODELS.USER, default: null }],

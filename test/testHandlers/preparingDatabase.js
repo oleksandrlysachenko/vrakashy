@@ -30,6 +30,7 @@ PreparingDB = function (){
 
             for (var i = 0; count > i; i++) {
                 USERS.TEMP_USER.login = 'temp' + i;
+                USERS.TEMP_USER.profile.email = 'example' + i + '@gmail.com';
                 var user = new User(USERS.TEMP_USER);
                 user.save(function (err, model) {
                     if (err) {
@@ -39,6 +40,20 @@ PreparingDB = function (){
             }
 
             callback();
+        };
+    };
+
+    this.createCustomUserByTemplate = function (template) {
+        return function (callback) {
+
+            var user = new User(template);
+            user.save(function (err, model) {
+                if (err) {
+                    return callback(err);
+                }
+
+                callback();
+            });
         };
     };
 

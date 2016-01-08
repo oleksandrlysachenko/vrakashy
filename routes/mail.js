@@ -9,7 +9,7 @@ var MailRouter = function(){
     var mail = new MailHandler();
     var session = new SessionHandler();
 
-    router.post('/forgotPassword');
+    router.post('/forgot', mail.sendForgotPassword);
     router.post('/invite', session.isAuthenticatedUser, mail.sendInvite);
 
     return router;
