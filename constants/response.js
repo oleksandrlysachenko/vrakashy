@@ -12,7 +12,8 @@ module.exports = {
 
     ON_ACTION: {
         SUCCESS: 'Success',
-        UPDATE: 'Update'
+        UPDATE: 'Update',
+        DELETE: 'Delete'
     },
 
     ON_AUTH: {

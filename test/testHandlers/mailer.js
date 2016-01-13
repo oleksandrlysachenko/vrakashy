@@ -14,7 +14,7 @@ describe('Mailer functionality', function () {
 
     var agent = request.agent(app);
     var loginData = USERS.TEMP_LOGIN_USER;
-    // custom user login data with receive new pass by forgotPassword
+    // custom_user login data with receive new pass
     var customLoginData = USERS.CUSTOM_LOGIN_USER;
     // TODO enter email for invite
     var receiverEmail = {
@@ -33,7 +33,7 @@ describe('Mailer functionality', function () {
 
         async.series([
             preparingDB.dropCollection(CONST.MODELS.USER + 's'),
-            preparingDB.createUserByTemplate(3),
+            preparingDB.createUserByTemplate(1),
             preparingDB.createCustomUserByTemplate(USERS.CUSTOM_USER)
         ], function (err, results) {
             if (err) {

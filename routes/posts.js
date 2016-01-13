@@ -1,13 +1,22 @@
-module.exports = function(){
-    var express = require('express');
-    var PostHandler = require('../handlers/posts');
-    var postRouter = express.Router();
-    var postHandler = new PostHandler;
+var express = require('express');
+var router = express.Router();
+var PostHandler = require('../handlers/posts');
+var SessionHandler = require('../handlers/session');
 
-    postRouter.get('/',postHandler.viewAll);
-    postRouter.post('/',postHandler.auth,postHandler.createPost);
-    postRouter.get('/:postId',postHandler.auth,postHandler.viewPost);
-    postRouter.delete('/:postId',postHandler.auth,postHandler.delete);
+var PostRouter = function(){
+    'use strict';
 
-    return postRouter;
+    var post = new PostHandler();
+    var session = new SessionHandler();
+
+    router.post('/', session.isAuthenticatedUser, post.createPost);
+    router.get('/search', session.isAuthenticatedUser, post.getListOfPosts);
+    router.route('/:id')
+        .get(session.isAuthenticatedUser, post.getById)
+        .delete(session.isAuthenticatedUser, post.deleteById);
+
+
+    return router;
 };
+
+module.exports = PostRouter();

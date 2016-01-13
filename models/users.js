@@ -6,13 +6,14 @@ module.exports = function () {
     var Schema = mongoose.Schema;
     var ObjectId = mongoose.Schema.ObjectId;
     var userSchema = new Schema({
-        login: { type: String, unique: true },
-        password: String,
+        login: { type: String, unique: true, required: true },
+        password: { type: String, required: true },
         profile: {
             first: { type: String, default: 'First' },
             last: { type: String, default: 'Last' },
             dateOfBirth: { type: Date, default: null },
-            email: { type: String, unique: true, default: null }
+            email: { type: String, unique: true, required: true },
+            location: { type: Object, default: null}
         },
         //options: {},
         friends: [{ type: ObjectId, ref: CONST.MODELS.USER, default: null }],

@@ -6,10 +6,10 @@ module.exports = function () {
     var Schema = mongoose.Schema;
     var ObjectId = mongoose.Schema.ObjectId;
     var postSchema = new Schema({
-        title: String,
-        description: String,
-        tags: [{ type: String }],
-        content: String,
+        title: { type: String, required: true },
+        description: { type: String, required: true },
+        tags: [{ type: String, default: null }],
+        content: { type: String, required: true },
         author: { type: ObjectId, ref: CONST.MODELS.USER, default: null },
         createAt: { type: Date, default: Date.now }
     }, { collection: CONST.MODELS.POST + 's' });
