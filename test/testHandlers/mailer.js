@@ -14,8 +14,8 @@ describe('Mailer functionality', function () {
 
     var agent = request.agent(app);
     var loginData = USERS.TEMP_LOGIN_USER;
-    // custom_user login data with receive new pass
-    var customLoginData = USERS.CUSTOM_LOGIN_USER;
+    // custom_user login data with real mail
+    var customLoginData = USERS.CUSTOM_LOGIN_USER_NEW_PASS;
     // TODO enter email for invite
     var receiverEmail = {
         email: 'death.moroz.dma@gmail.com'

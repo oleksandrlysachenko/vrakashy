@@ -18,6 +18,7 @@ module.exports = function(app){
     app.post('/signUp', registration.signUp);
     app.post('/signIn', registration.signIn);
     app.post('/signOut', session.isAuthenticatedUser, registration.signOut);
+    app.post('/verification', registration.verification);
 
     app.use('/mail', mailRouter);
 

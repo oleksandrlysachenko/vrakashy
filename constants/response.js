@@ -13,12 +13,16 @@ module.exports = {
     ON_ACTION: {
         SUCCESS: 'Success',
         UPDATE: 'Update',
-        DELETE: 'Delete'
+        DELETE: 'Delete',
+        WAITE_VERIFICATION: 'Registration is success. Please, check your mail and verify your registration!'
     },
 
     ON_AUTH: {
         LOG_IN: 'Login successful',
         LOG_OUT: 'Logout successful',
-        UN_AUTHORIZED: 'Un Authorized'
+        UN_AUTHORIZED: 'Un Authorized',
+        REGISTER_LOGIN_USED: 'Login is used',
+        NOT_VERIFY: 'Registration not verify! Please verify your registration with received link by email.',
+        VERIFY: 'Verification is completed'
     }
 };

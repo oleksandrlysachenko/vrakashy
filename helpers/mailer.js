@@ -1,3 +1,5 @@
+require('../config/development');
+
 var nodemailer = require('nodemailer');
 var stmpTransport = require('nodemailer-smtp-transport');
 
@@ -5,10 +7,10 @@ var Mailer = function () {
     'use strict';
 
     var mailer = nodemailer.createTransport(stmpTransport({
-        service: 'gmail',
+        service: process.env.MAILER_SERVICE,
         auth: {
-            user: 'vrakashy@gmail.com',
-            pass: 'vrakashymaster'
+            user: process.env.MAILER_MAIL,
+            pass: process.env.MAILER_PASS
         }
     }));
 
@@ -31,7 +33,7 @@ var Mailer = function () {
     this.sendForget = function (receiveEmail, generatePass, callback) {
 
         mailer.sendMail({
-            from: 'vrakashy@gmail.com',
+            from: process.env.MAILER_MAIL,
             to: receiveEmail,
             subject: 'Forgot password',
             text: 'We generate a new password for you.' + generatePass
@@ -42,7 +44,24 @@ var Mailer = function () {
 
             return callback();
         });
-    }
+    };
+
+    this.sendVerification = function (receiveEmail, loginId, generateCode, callback) {
+
+        mailer.sendMail({
+            from: process.env.MAILER_MAIL,
+            to: receiveEmail,
+            subject: 'Verify your registration',
+            text: 'Please verify your registration, click the link: http://localhost:3030' + '/verification?id=' + loginId
+            + '&code=' + generateCode
+        }, function (error, info){
+            if (error) {
+                return callback(error);
+            }
+
+            return callback();
+        });
+    };
 };
 
  module.exports = Mailer;

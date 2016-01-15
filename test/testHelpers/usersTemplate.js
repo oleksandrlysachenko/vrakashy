@@ -8,6 +8,9 @@ module.exports = {
             first: 'First',
             last: 'Last',
             email: 'example@gmail.com'
+        },
+        options: {
+            verifyRegistration: true
         }
     },
 
@@ -17,6 +20,7 @@ module.exports = {
         confirmPassword: '12345'
     },
 
+    //TODO enter real mail to check test with verification, invite or forgot password
     CUSTOM_USER: {
         login: 'default',
         password: '12345',
@@ -29,6 +33,12 @@ module.exports = {
     },
 
     CUSTOM_LOGIN_USER: {
+        login: 'default',
+        password: '12345',
+        confirmPassword: '12345'
+    },
+
+    CUSTOM_LOGIN_USER_NEW_PASS: {
         login: 'default',
         password: 'newPass',
         confirmPassword: 'newPass'

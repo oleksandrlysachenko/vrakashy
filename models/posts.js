@@ -9,6 +9,7 @@ module.exports = function () {
         title: { type: String, required: true },
         description: { type: String, required: true },
         tags: [{ type: String, default: null }],
+        attachment: { type: String, default: null},
         content: { type: String, required: true },
         author: { type: ObjectId, ref: CONST.MODELS.USER, default: null },
         createAt: { type: Date, default: Date.now }

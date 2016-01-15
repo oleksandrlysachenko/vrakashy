@@ -13,9 +13,12 @@ module.exports = function () {
             last: { type: String, default: 'Last' },
             dateOfBirth: { type: Date, default: null },
             email: { type: String, unique: true, required: true },
-            location: { type: Object, default: null}
+            location: { type: Object, default: null }
         },
-        //options: {},
+        options: {
+            verifyRegistration: { type: Boolean, default: false },
+            verifyCode: { type: String, default: null }
+        },
         friends: [{ type: ObjectId, ref: CONST.MODELS.USER, default: null }],
         posts: [{ type: ObjectId, ref: CONST.MODELS.POST, default: null }]
         //userStatus: {type: String, default: 'User'}
