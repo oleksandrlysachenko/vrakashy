@@ -9,8 +9,9 @@ module.exports = function () {
         login: { type: String, unique: true, required: true },
         password: { type: String, required: true },
         profile: {
-            first: { type: String, default: 'First' },
-            last: { type: String, default: 'Last' },
+            login: { type: String, required: true },
+            first: { type: String, required: true },
+            last: { type: String, required: true },
             dateOfBirth: { type: Date, default: null },
             email: { type: String, unique: true, required: true },
             location: { type: Object, default: null }

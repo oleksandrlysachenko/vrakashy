@@ -92,13 +92,20 @@ var Registration = function () {
 
                 return session.register(req, res, model._id.toString());
             });
+
     };
 
     this.signOut = function (req, res, next) {
 
         console.time('time');
 
-        var uId = req.session.uId;
+        var uId;
+
+        if (!req.session.uId) {
+            return res.status(401).send({error: RESPONSE.ON_AUTH.UN_AUTHORIZED});
+        }
+
+        uId = req.session.uId;
 
         User
             .findById(uId, function (err, model) {
@@ -140,5 +147,24 @@ var Registration = function () {
             });
         });
     };
+
+    this.checkAuthorized = function (req, res, next) {
+        var uId;
+
+        if (!req.session.uId) {
+            return res.status(401).send({error: RESPONSE.ON_AUTH.UN_AUTHORIZED});
+        }
+
+        uId = req.session.uId;
+
+        User.findById(uId, function (err, model) {
+            if (err) {
+               return next(err);
+            }
+
+            res.status(200).send({success: RESPONSE.ON_AUTH.LOG_IN});
+        });
+    };
 };
+
 module.exports = Registration;

@@ -1,5 +1,3 @@
-var App = App || {};
-
 require.config({
     paths: {
         Backbone : 'libs/backbone/backbone',
@@ -16,5 +14,7 @@ require.config({
     }
 });
 
-require(['app'], function (app){ app.init()});
+require(['app'], function (app){
+    app.init()
+});
 

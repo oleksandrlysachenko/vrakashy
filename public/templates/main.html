@@ -1,6 +1,14 @@
- <ul>
-        <button id="loginBtn">Log In</button>
-        <button id="singUpBtn">Sing Up</button>
-     <button id="usersBtn">Users List</button>
-     <button id="postsBtn">Posts List</button>
-    </ul>
+ <table>
+        <thead>
+            <th>Properties</th>
+            <th>Data</th>
+        </thead>
+        <tbody>
+        <% for (var key in model) { %>
+            <tr>
+                <td><%= key %></td>
+                <td><%= model[key] %></td>
+            </tr>
+        <% } %>
+        </tbody>
+    </table>

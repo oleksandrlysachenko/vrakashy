@@ -1,17 +1,12 @@
 define([
     'models/user',
-    'models/session',
-    'views/addPost',
     'text!templates/user.html'
 ], function(
-    User,
-    ModelSession,
-    AddPostView,
-    userTemplate ) {
+    ModelUser,
+    TemplateUser ) {
     var View = Backbone.View.extend({
         el: '#content',
-        template: _.template(userTemplate),
-
+        template: _.template(TemplateUser),
         events: {
             'click #userListBtn' : 'userListBtn',
             'click #postsListBtn' : 'postsListBtn',

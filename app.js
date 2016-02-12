@@ -7,7 +7,8 @@ var mongoStore = require('connect-mongo')(session);
 var serverLog = require('morgan');
 var app = express();
 var http = require('http');
-var server = http.createServer(app);
+var server = http.Server(app);
+var io = require('socket.io')(server);
 
 require('./config/development');
 

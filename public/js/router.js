@@ -1,161 +1,56 @@
 define([
-    'views/main',
-    'views/users',
-    'views/user',
-    'views/posts',
-    'views/post',
-    'views/addPost',
-    'views/login',
-    'views/userPosts',
-    'views/singUp',
-    'models/user',
-    'models/post',
-    'collections/users',
-    'collections/posts'
+    'Backbone',
+    'views/registration/signIn',
+    'views/registration/signUp',
+    'views/main'
 ], function(
-    MainView,
-    UsersView,
-    UserView,
-    PostsView,
-    PostView,
-    AddPostView,
-    ViewLogin,
-    ViewUserPosts,
-    ViewSingUp,
-    UserModel,
-    PostModel,
-    UsersCollection,
-    PostsCollection) {
+    Backbone,
+    ViewSignIn,
+    ViewSignUp,
+    ViewMain
+) {
     var Router = Backbone.Router.extend({
 
+        contentView: null,
+
         routes: {
-            "" : "root",
-            "singUp": "singUp",
-            "users": "users",
-            "user/:id" : "user",
-            "user/:id/posts" : "userPosts",
-            "user/:id/post" : "userAddPost",
-            "posts": "posts",
-            "post/:id" : "viewPost",
-            "login" : "login",
-            "*any": "any"
+            "" : "toMain",
+            "signIn" : "toSignIn",
+            "signUp" : "toSignUp",
+            "main" : "toMain",
+            "*any" : "any"
         },
 
-        root: function(){
-            var View = new MainView();
-            return View
+        initialize: function() {
         },
 
-        singUp : function(){
-            var self = this;
-            if (self.renderView){
-                self.renderView.undelegateEvents();
+        toSignIn: function() {
+            if (this.contentView) {
+                this.contentView.undelegateEvents();
             }
-            self.renderView = new ViewSingUp();
+
+            this.contentView = new ViewSignIn();
         },
 
-        users: function() {
-            var self = this;
-            var collection = new UsersCollection();
-            collection.unbind();
-            var renderView = function () {
-                if (self.usersView) {
-                    self.usersView.undelegateEvents();
-                }
-                self.usersView = new UsersView({
-                    collection: collection
-                });
-                return self;
-            };
-            collection.url = 'user/all';
-            collection.fetch({reset: true});
-            collection.bind('reset', renderView);
+        toSignUp: function() {
+            if (this.contentView) {
+                this.contentView.undelegateEvents();
+            }
+
+            this.contentView = new ViewSignUp();
         },
 
-        posts: function(){
-            var self = this;
-            var collection = new PostsCollection;
-            collection.unbind();
-            var renderView = function(){
-                if (self.postsView) {
-                    self.postsView.undelegateEvents();
-                }
-                self.postsView = new PostsView({
-                    collection: collection
-                });
-                return self;
-            };
-            collection.fetch({reset: true});
-            collection.bind('reset', renderView)
+        toMain: function() {
+            if (this.contentView) {
+                this.contentView.undelegateEvents();
+            }
 
-
-        },
-
-        viewPost: function(idPost){
-                var Model = new PostModel({_id : idPost});
-                Model.fetch({
-                    success: function(model){
-                        var view = new PostView(model.toJSON());
-                    }
-                })
-        },
-
-        user: function(userId){
-            var Model = new UserModel({_id : userId});
-            Model.fetch({
-                success:function(model,response){
-                    var result = response;
-                    var view = new UserView(result);
-                },
-                error: function(err,xhr){
-                    Backbone.history.fragment = '';
-                    Backbone.history.navigate('#login', {trigger: true});
-                }
-            });
-        },
-
-        userPosts : function(id){
-            var self = this;
-            var collection = new PostsCollection;
-            collection.unbind();
-            collection.url = 'user/'+id+'/posts';
-            var renderView = function(){
-                if (self.postsView) {
-                    self.postsView.undelegateEvents();
-                }
-                self.postsView = new ViewUserPosts({
-                    collection: collection,
-                    id: id
-                });
-                return self;
-            };
-            collection.fetch({reset: true});
-            collection.bind('reset', renderView)
-        },
-
-        userAddPost: function(userID){
-            var self = this;
-            if (self.renderView){
-                self.renderView.undelegateEvents();
-              }
-            self.renderView = new AddPostView(userID);
-            // return self;
-            //var View = new AddPostView(userID);
-            //return View
-        },
-
-        login: function(){
-            var View = new ViewLogin();
-            return View
+            this.contentView = new ViewMain();
         },
 
         any: function(){
-            var View = new ViewLogin();
-            return View
-        },
-
-        initialize: function(){
         }
+
     });
 
     return Router;

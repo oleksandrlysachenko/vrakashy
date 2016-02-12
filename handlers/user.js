@@ -15,7 +15,7 @@ var UserHandler = function(){
                 return next(err);
             }
 
-            return res.status(200).send(model);
+            return res.status(200).send(model.profile);
         });
 
     };

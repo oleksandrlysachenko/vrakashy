@@ -1,3 +1,4 @@
+var express = require('express');
 var model = require('../models/index');
 var RegistrationHandler = require('../handlers/registration');
 var SessionHandler = require('../handlers/session');
@@ -12,13 +13,15 @@ module.exports = function(app){
     var session = new SessionHandler();
 
     app.get('/', function (req, res, next) {
-        res.status(200).send('Express start success');
+        //res.status(200).send('Express start success');
+        res.sendFile('index.html');
     });
 
     app.post('/signUp', registration.signUp);
     app.post('/signIn', registration.signIn);
     app.post('/signOut', session.isAuthenticatedUser, registration.signOut);
     app.post('/verification', registration.verification);
+    app.get('/authorized', registration.checkAuthorized);
 
     app.use('/mail', mailRouter);
 
