@@ -18,11 +18,18 @@ define([
 
         signUp: function (e) {
             var thisEl = this.$el;
-            var login = thisEl.find('#login').val();
-
-            var user = new ModelSignIn();
-
-            var data = this.readAttributes(thisEl);
+            var user = new SignUpModel();
+            var data = {
+                login: thisEl.find('#login').val(),
+                password: thisEl.find('#password').val(),
+                confirmPassword: thisEl.find('#confirmPassword').val(),
+                profile: {
+                    login: thisEl.find('#login').val(),
+                    email: thisEl.find('#email').val(),
+                    first: thisEl.find('#first').val(),
+                    last: thisEl.find('#last').val()
+                }
+            };
 
             user.save(data, {
                 success: function (model, res) {
@@ -44,8 +51,9 @@ define([
             var data = {};
             var readItems = ['#login', '#password', '#confirmPassword', '#email', '#first', '#last'];
 
-            for (var i = readItems.length-1; i >= 0; i++)
-            data[readItems[i]] = thisEl.find(readItems[i]).val()
+            for (var i = readItems.length-1; i >= 0; i--) {
+                data[readItems[i]] = thisEl.find(readItems[i]).val();
+            }
 
             return data;
         },

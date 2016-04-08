@@ -24,10 +24,10 @@ define(['router'], function(Router){
         function runApplication(err, res) {
             Backbone.history.start({silent: true});
 
-            /*if (err && url!== '#signUp') {
+            if (err && url!== '#signUp') {
                 Backbone.history.fragment = '#';
                 return Backbone.history.navigate('signIn', {trigger: true});
-            }*/
+            }
 
             if (fragment) {
                 Backbone.history.fragment = '#';

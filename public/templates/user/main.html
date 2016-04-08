@@ -1,0 +1,14 @@
+<table>
+    <thead>
+    <th>Properties</th>
+    <th>Data</th>
+    </thead>
+    <tbody>
+    <% for (var key in model) { %>
+    <tr>
+        <td><%= key %></td>
+        <td><%= model[key]%></td>
+    </tr>
+    <% } %>
+    </tbody>
+</table>

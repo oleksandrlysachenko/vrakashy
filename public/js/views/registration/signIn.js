@@ -6,7 +6,7 @@ define([
     TemplateSignIn
 ){
     var ViewSignIn = Backbone.View.extend({
-        el: '#content',
+        el: '#mainContent',
         template: _.template(TemplateSignIn),
         events: {
             'click #signInBtn' : 'signIn',

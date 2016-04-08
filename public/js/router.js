@@ -2,22 +2,29 @@ define([
     'Backbone',
     'views/registration/signIn',
     'views/registration/signUp',
-    'views/main'
+    'views/registration/signOut',
+    'views/main',
+    'views/user/search'
 ], function(
     Backbone,
-    ViewSignIn,
-    ViewSignUp,
-    ViewMain
+    SignInView,
+    SignUpView,
+    SignOutView,
+    MainView,
+    UserSearchView
 ) {
     var Router = Backbone.Router.extend({
 
+        mainView: null,
         contentView: null,
 
         routes: {
             "" : "toMain",
             "signIn" : "toSignIn",
             "signUp" : "toSignUp",
+            "signOut" : "toSignOut",
             "main" : "toMain",
+            "user/search" : "toUserSearch",
             "*any" : "any"
         },
 
@@ -29,7 +36,7 @@ define([
                 this.contentView.undelegateEvents();
             }
 
-            this.contentView = new ViewSignIn();
+            this.contentView = new SignInView();
         },
 
         toSignUp: function() {
@@ -37,7 +44,15 @@ define([
                 this.contentView.undelegateEvents();
             }
 
-            this.contentView = new ViewSignUp();
+            this.contentView = new SignUpView();
+        },
+
+        toSignOut: function() {
+            if (this.contentView) {
+                this.contentView.undelegateEvents();
+            }
+
+            this.contentView = new SignOutView();
         },
 
         toMain: function() {
@@ -45,7 +60,19 @@ define([
                 this.contentView.undelegateEvents();
             }
 
-            this.contentView = new ViewMain();
+            this.contentView = new MainView();
+        },
+
+        toUserSearch: function() {
+            if (!this.mainView) {
+                this.mainView = new MainView();
+            }
+
+            if (this.contentView) {
+                this.contentView.undelegateEvents();
+            }
+
+            this.contentView = new UserSearchView();
         },
 
         any: function(){

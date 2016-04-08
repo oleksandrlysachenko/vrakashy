@@ -203,8 +203,6 @@ describe('User functionality', function () {
             });
     });
 
-
-
     it('User GET list of all friends', function (done) {
 
         agent

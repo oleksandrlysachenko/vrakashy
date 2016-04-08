@@ -1,38 +1,33 @@
 define([
     'models/user',
     'views/navBar',
+    'views/user/main',
     'text!templates/main.html'
 ], function(
-    ModelUser,
-    ViewNavBar,
+    UserModel,
+    NavBar,
+    MainUserView,
     TemplateMain
 ) {
     var MainView = Backbone.View.extend({
-        el: '#content',
+        el: '#mainContent',
         template: _.template(TemplateMain),
         events: {
         },
 
         initialize: function(){
-            var self = this;
-
-            this.model = new ModelUser();
-            this.model.fetch({
-                success: function (model, response) {
-                    self.render();
-                },
-                error: function (model, xhr) {
-
-                }
-            });
+            console.log('Initialize: main View');
 
             this.render();
         },
 
         render: function(){
-            this.$el.html(this.template({model: this.model.toJSON()}));
+            console.log('Render: main View');
 
-            ViewNavBar();
+            this.$el.html(this.template(/*{model: this.model.toJSON()}*/));
+
+            this.navBar = new NavBar();
+            this.mainUser = new MainUserView();
 
             return this;
         }

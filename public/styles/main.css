@@ -168,3 +168,6 @@ table th {
 #saveBtn {
     width: 220px;
 }
+.trClicked.rowSelected {
+    background: #a3a3a3;
+}

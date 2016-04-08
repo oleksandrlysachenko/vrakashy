@@ -21,6 +21,9 @@ var Registration = function () {
         var body = req.body;
         body.options = {};
 
+        //TODO delete 25 line after testing
+        body.options.verifyRegistration = true;
+
         if (!body || !body.login || !body.password || !body.confirmPassword || !body.profile.email) {
             return res.status(400).send({error: RESPONSE.NOT_ENOUGH_PARAMS});
         }
@@ -50,14 +53,15 @@ var Registration = function () {
                         return next(err);
                     }
 
-                    mailer.sendVerification(model.profile.email, model._id, model.options.verifyCode, function (err, info) {
+                    return session.register(req, res, model._id.toString());
+                    //TODO after testing delete 53 line and uncomment 55-61 line
+                    /*mailer.sendVerification(model.profile.email, model._id, model.options.verifyCode, function (err, info) {
                         if (err) {
                             return next(err);
                         }
                         //TODO delete after test send '_id' of model in response!!!
                         return res.status(200).send({success: RESPONSE.ON_ACTION.WAITE_VERIFICATION, id: model._id});
-                        //return session.register(req, res, model._id.toString());
-                    });
+                    });*/
                 });
         });
     };

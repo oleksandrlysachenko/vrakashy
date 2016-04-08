@@ -1,0 +1,14 @@
+<table>
+        <thead>
+        <th>Properties</th>
+        <th>Data</th>
+        </thead>
+        <tbody>
+        <% for (var i in collection) { %>
+        <tr class="trClicked" data-hash="<%= i %>">
+            <td><%= i %></td>
+            <td><%= collection[i].login %></td>
+        </tr>
+        <% } %>
+        </tbody>
+</table>

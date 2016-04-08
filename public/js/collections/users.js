@@ -1,8 +1,7 @@
-define(['models/user'], function(Model){
+define(['models/user'], function (Model) {
     var Collection = Backbone.Collection.extend({
         model: Model,
-
-        url: '/user/'
+        url: '/user/search'
     });
 
     return Collection;
